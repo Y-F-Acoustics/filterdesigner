@@ -20,8 +20,7 @@ def impz(system):
             The following gives the number of elements in the tuple and
             the interpretation:
                 
-                * 1 (instance of `lti`)
-                * 2 (num, den)
+                * (num, den)
             
     Returns
     -------
@@ -60,9 +59,8 @@ def freqz(system, worN=512, fs=2*np.pi, outform = 'complex'):
             describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
-                
-                * 1 (instance of `lti`)
-                * 2 (num, den)
+
+                * (num, den)
                 
         worN : {None, int, array_like}, optional
             If a single integer, then compute at that many frequencies 
@@ -122,9 +120,8 @@ def grpdelay(system, worN=512, fs=2*np.pi):
             describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
-                
-                * 1 (instance of `lti`)
-                * 2 (num, den)
+            
+                * (num, den)
                 
         worN : {None, int, array_like}, optional
             If a single integer, then compute at that many frequencies 
@@ -171,8 +168,7 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
             The following gives the number of elements in the tuple and
             the interpretation:
                 
-                * 1 (instance of `lti`)
-                * 2 (num, den)
+                * (num, den)
                 
         worN : {None, int, array_like}, optional
             If a single integer, then compute at that many frequencies 
@@ -210,12 +206,15 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
         phase = np.rad2deg(phase)
     
     return w, phase
+
+#def zplane(system)
     
 if __name__ == '__main__':
     
     import matplotlib.pyplot as plt
     
     b, a = signal.iirdesign(0.715, 0.99, 1, 120)
+    #lti = signal.lti(b, a)
     #b = signal.firwin(257, 21000/22050)
     #a = 1
     
