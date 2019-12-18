@@ -207,11 +207,53 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
     
     return w, phase
 
-#def zplane(system)
+def zplane(system, show=True, figsize=(8, 8)):
+    b = system[0]
+    a = system[1]
+
+    #The coefficients are less than 1, normalize the coefficients
+    if np.max(b) > 1:
+        kn = np.max(b)
+        b /= float(kn)
+    else:
+        kn = 1
     
+    if np.max(a) > 1:
+        kd = np.max(a)
+        a /= float(kd)
+    else:
+        kd = 1
+
+    # Get the poles and gains
+    p = np.roots(a)
+    z = np.roots(b)
+    k = kn / float(kd)
+    
+    if show == True:
+        plt.figure(figsize=figsize)
+        ax = plt.subplot(111)
+        uc = patches.Circle((0, 0), radius=1, fill=False,
+                            color='black', ls='dashed')
+        ax.add_patch(uc)
+        plt.plot(z.real, z.imag, 'go', ms=10)
+        plt.plot(p.real, p.imag, 'rx', ms=10)
+        ax.spines['left'].set_position('center')
+        ax.spines['bottom'].set_position('center')
+        ax.spines['right'].set_visible(False)
+        ax.spines['top'].set_visible(False)
+        r = 1.5
+        plt.axis('scaled')
+        plt.axis([-r, r, -r, r])
+        ticks = [-1, -.5, .5, 1]
+        plt.xticks(ticks)
+        plt.yticks(ticks)
+
+    return z, p, k
+
 if __name__ == '__main__':
     
     import matplotlib.pyplot as plt
+    from matplotlib import patches
     
     b, a = signal.iirdesign(0.715, 0.99, 1, 120)
     #lti = signal.lti(b, a)
@@ -241,3 +283,6 @@ if __name__ == '__main__':
     plt.plot(w, phase)
     plt.xlabel('Frequency [Hz]')
     plt.ylabel('Phase [rad]')
+    
+    z, p, k = zplane((b, a))
+    plt.title('Lowpass digital filter')
