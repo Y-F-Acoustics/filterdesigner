@@ -208,6 +208,33 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
     return w, phase
 
 def zplane(system, show=True, figsize=(8, 8)):
+    """
+    Zero-pole plot for a digital filter.
+
+    Parameters
+    ----------
+        system : an instance of the LTI class or a tuple of array_like
+            describing the system.
+            The following gives the number of elements in the tuple and
+            the interpretation:
+                
+                * (num, den)
+
+        show : boolean, optional
+            If True, the zero-pole plot is shown as a figure.
+            Default is True.
+
+    Returns
+    -------
+        z : ndarray
+            Zeros.
+
+        p : ndarray
+            Poles.
+
+        k : ndarray
+            Gain corresponding to this digital filter.
+    """
     b = system[0]
     a = system[1]
 
