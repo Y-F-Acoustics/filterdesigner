@@ -15,8 +15,7 @@ def impz(system):
     
     Parameters
     ----------
-        system : an instance of the LTI class or a tuple of array_like
-            describing the system.
+        system : a tuple of array_like describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
                 
@@ -40,7 +39,7 @@ def impz(system):
     
     if type(system[1]) == int and system[1] == 1:
         # FIR filter
-        return np.array(range(len(b))), b
+        return np.array(range(len(system[0]))), system[0]
     
     elif type(system[1]) == np.ndarray:
         # IIR filter 
@@ -55,8 +54,7 @@ def freqz(system, worN=512, fs=2*np.pi, outform = 'complex'):
     
     Parameters
     ----------
-        system : an instance of the LTI class or a tuple of array_like
-            describing the system.
+        system : a tuple of array_like describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
 
@@ -116,8 +114,7 @@ def grpdelay(system, worN=512, fs=2*np.pi):
     
     Parameters
     ----------
-        system : an instance of the LTI class or a tuple of array_like
-            describing the system.
+        system : a tuple of array_like describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
             
@@ -163,8 +160,7 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
     
     Parameters
     ----------
-        system : an instance of the LTI class or a tuple of array_like
-            describing the system.
+        system : a tuple of array_like describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
                 
@@ -185,7 +181,7 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
             The sampling frequency of the digital system.
             Defaults to 2*pi radians/sample (so w is from 0 to pi).
             
-        deg : boolean, optional
+        deg : bool, optional
             If True, the phase response is returned as degree.
             Default is False.
             
@@ -208,6 +204,37 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
     return w, phase
 
 def zplane(system, show=True, figsize=(8, 8)):
+    """
+    Zero-pole plot of a digital filter.
+    
+    Parameters
+    ----------
+        system : a tuple of array_like describing the system.
+            The following gives the number of elements in the tuple and
+            the interpretation:
+                
+                * (num, den)
+                
+        show : bool, optional
+            If True, a zero-pole plot of the digital filter is shown 
+            by matplorlib.pyplot.
+            Default is True.
+            
+        figsize : tuple, optional
+            If show is True, you can set the figure size of zero-pole plot.
+            Default is (8, 8)
+            
+    Returns
+    -------
+        z : array_like
+            Zeros of a digital filter.
+            
+        p : array_like
+            Poles of a digital filter.
+            
+        k : array_like
+            Gain of a digital filter.
+    """
     b = system[0]
     a = system[1]
 
