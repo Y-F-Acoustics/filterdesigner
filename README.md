@@ -1,2 +1,2 @@
 # filterdesigner
-A MATLAB-like digital filter design library for python.
+A MATLAB-like and simple digital filter design library for python.
