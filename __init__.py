@@ -10,3 +10,4 @@ import matplotlib.pyplot as plt
 import scipy.signal as signal
 
 from . import FilterSpec
+from . import FIRDesign
