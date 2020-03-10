@@ -1,7 +1,7 @@
 # filterdesigner
 A MATLAB-like and simple digital filter design library for python.  
   
-filterdesigner can makes simple digital filters they have numerator and denominator coefficients and returns these characteristics.
+**filterdesigner** can makes simple digital filters they have numerator and denominator coefficients and returns these characteristics.
   
 ## Requirements
 [Python 3.7.6 or later](https://www.python.org/)  
