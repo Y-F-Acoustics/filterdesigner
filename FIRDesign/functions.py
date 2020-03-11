@@ -10,7 +10,7 @@ import scipy.signal as signal
 import scipy as sp
 from typing import List, Tuple
 
-def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool =True) -> Tuple[float, float]:
+def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool =True) -> Tuple:
     """
     FIR filter design using the window method.
     
@@ -137,7 +137,7 @@ def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool 
     return num, den
 
 
-def fir2(n : int, f, m, npt : int =512, window=None) -> Tuple[float, float]:
+def fir2(n : int, f, m, npt : int =512, window=None) -> Tuple:
     """
     FIR filter design using the window method.
 
@@ -193,7 +193,7 @@ def fir2(n : int, f, m, npt : int =512, window=None) -> Tuple[float, float]:
     return num, den
 
 
-def firls(n : int, f, a, w=None) -> Tuple[float, float]:
+def firls(n : int, f, a, w=None) -> Tuple:
     """
     FIR filter design using least-squares error minimization.
 
@@ -243,7 +243,7 @@ def firls(n : int, f, a, w=None) -> Tuple[float, float]:
     return num, den
 
 
-def firpm(n : int, f, a, w=None, ftype : str ='hilbert', lgrid : int =16) -> Tuple[float, float]:
+def firpm(n : int, f, a, w=None, ftype : str ='hilbert', lgrid : int =16) -> Tuple:
     """
     Parameters
     ----------
@@ -301,7 +301,7 @@ def firpm(n : int, f, a, w=None, ftype : str ='hilbert', lgrid : int =16) -> Tup
     return num, den
 
 
-def sgolay(order : int, flamelen : int) -> Tuple[float, float]:
+def sgolay(order : int, flamelen : int) -> Tuple:
     """
     Parameters
     ----------
