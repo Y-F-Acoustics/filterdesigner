@@ -6,4 +6,5 @@ A MATLAB-like and simple digital filter design library for python.
 ## Requirements
 [Python 3.7.6 or later](https://www.python.org/)  
 [Numpy 1.18.1 or later](https://numpy.org/)  
-[Scipy 1.3.2 or later](https://www.scipy.org/)
+[Scipy 1.3.2 or later](https://www.scipy.org/)  
+[Matplotlib 3.1.1 or later](https://matplotlib.org/)  
