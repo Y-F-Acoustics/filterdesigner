@@ -1,315 +1,335 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Oct 14 13:05:23 2019
+Created on Wed Jan 29 16:34:04 2020
 
 @author: Yuki-F
 """
 
+import numpy as np
 import scipy.signal as signal
 import scipy as sp
-import numpy as np
+from typing import List, Tuple
 
-def impz(system):
+def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool =True) -> Tuple[float, float]:
     """
-    Impulse response of a digital filter.
+    FIR filter design using the window method.
+    
+    This function computes the coefficients of a finite impulse response filter. 
+    The filter will have linear phase; it will be Type I if n is odd 
+    and Type II if numtaps is even.
+
+    Type II filters always have zero response at the Nyquist frequency, 
+    so a ValueError exception is raised if firwin is called with n even 
+    and having a passband whose right end is at the Nyquist frequency.
+    
     
     Parameters
     ----------
-        system : a tuple of array_like describing the system.
-            The following gives the number of elements in the tuple and
-            the interpretation:
-                
-                * (num, den)
+        n : int
+            Length of the filter (number of coefficients, i.e. the filter 
+            order + 1). 
+            `n` must be odd if a passband includes the Nyquist frequency.
             
-    Returns
-    -------
-        T : ndarray
-            A 1-D array of time points.
-            
-        yout : ndarray
-            A 1-D array containing the impulse response of the system (except
-            for singularities at zero).
-            
-    Notes
-    -----
-        If (num, den) is passed in for ``system``, coefficients for both the
-        numerator and denominator should be specified in describing exponent
-        order (e.g. ``s^2 + 3s + 5`` would be represented as ``[1, 3, 5]``).
-    """
-    
-    if type(system[1]) == int and system[1] == 1:
-        # FIR filter
-        return np.array(range(len(system[0]))), system[0]
-    
-    elif type(system[1]) == np.ndarray:
-        # IIR filter 
-        return signal.impulse(system)
-    
-    else:
-        raise ValueError
+        Wn : float or 1D array_like
+            Cutoff frequency of filter (expressed in the same units as fs) 
+            OR an array of cutoff frequencies (that is, band edges). 
+            In the latter case, the frequencies in `Wn` should be positive 
+            and monotonically increasing between 0 and 1. 
+            The values 0 and 1 must not be included in `Wn`.
         
-def freqz(system, worN=512, fs=2*np.pi, outform = 'complex'):
-    """
-    Frequency response of a digital filter.
-    
-    Parameters
-    ----------
-        system : a tuple of array_like describing the system.
-            The following gives the number of elements in the tuple and
-            the interpretation:
-
-                * (num, den)
-                
-        worN : {None, int, array_like}, optional
-            If a single integer, then compute at that many frequencies 
-            (default is N=512). This is a convenient alternative to:
-
-                np.linspace(0, fs if whole else fs/2, N, endpoint=False)
+        ftype : string, optional
+            Filter type of filter('low', 'high', 'bandpass', 'stop', 'DC-0' 
+            or 'DC-1').
+            Specified as one of the following.
             
-            Using a number that is fast for FFT computations can result in 
-            faster computations (see Notes).
-            If an array_like, compute the response at the frequencies given. 
-            These are in the same units as fs.
-            
-        fs : float, optional
-            The sampling frequency of the digital system.
-            Defaults to 2*pi radians/sample (so w is from 0 to pi).
+            1. 'low' specifies a lowpass filter with cutoff frequency Wn. 
+               'low' is the default for scalar Wn.
+            2. 'high' specifies a highpass filter with cutoff frequency Wn.
+            3. 'bandpass' specifies a bandpass filter if Wn is a two-element vector. 
+               'bandpass' is the default when Wn has two elements.
+            4. 'stop' specifies a bandstop filter if Wn is a two-element vector.
+            5. 'DC-0' specifies that the first band of a multiband filter is 
+               a stopband. 
+               'DC-0' is the default when Wn has more than two elements.
+            6. 'DC-1' specifies that the first band of a multiband filter is 
+               a passband.
         
+        window : string or tuple of string and parameter values, optional
+            Desired window to use. See 'scipy.signal.get_window' for a list of 
+            windows and required parameters.
+            
+        scaleopt : bool, optional
+            Set to True to scale the coefficients so that the frequency response 
+            is exactly unity at a certain frequency. That frequency is either:
+                
+            - 0 (DC) if the first passband starts at 0 (i.e. pass_zero is True)
+            - fs/2 (the Nyquist frequency) if the first passband ends at fs/2 
+              (i.e the filter is a single band highpass filter); center of 
+              first passband otherwise
+    
+    Returns
+    -------
+        system :a tuple of array_like describing the system.
+            The following gives the number of elements in the tuple and
+            the interpretation:
+                
+                * (num, den)
+                
+    Raises
+    ------
+        ValueError
+            -If any value in `Wn` is less than or equal to 0 or greater
+             than or equal to 1, if the values in `Wn` are not strictly
+             monotonically increasing, or if `n` is even but a passband
+             includes the Nyquist frequency.
+            -If the length of `Wn` equals to 1 but `ftype` is defined to
+             other than 'default', 'low', 'high'.
+            -If the length of `Wn` equals to 2 but `ftype` is defined to
+             other than 'default', 'bandpass', 'stop'.
+            -If the length of `Wn` more than 2 but `ftype` is defined to
+             other than 'default', 'DC-0', 'DC-1'.
+            -If `ftype` is other than 'default', 'low', 'bandpass', 'high', 
+             'stop', 'DC-0', 'DC-1'.
+    """
+    
+    # Default parameters
+    filtertype = ['default', 'low', 'bandpass', 'high', 'stop', 'DC-0', 'DC-1']
+    pass_zero = True
+    
+    #Filter type check
+    if (ftype in filtertype) == False:
+        raise ValueError("ftype must be 'default', 'low', 'bandpass', 'high'"
+                         +", 'stop', 'DC-0' or 'DC-1'.")
+    
+    #Filter length check
+    if type(Wn) == float and (ftype in ['default', 'low', 'high']) == False:
+        # When the length of Wn equals to 1.
+        raise ValueError("If the length of Wn equals to 1, ftype must be"
+                         +" 'default', 'low', or 'high'.")
+    elif type(Wn) == list and len(Wn) == 2 and (ftype in ['default', 'bandpass', 'stop']) == False:
+        # When the length of Wn equals to 2.
+        raise ValueError("If the length of Wn equals to 2, ftype must be"
+                         +" 'default', 'bandpass', or 'stop'.")
+    elif type(Wn) == list and len(Wn) >= 3 and (ftype in ['default', 'DC-0', 'DC-1']) == False:
+        # When the length of Wn is greater than 2.
+        raise ValueError("If the length of Wn is greater than 2, ftype must be"
+                         +" 'default', 'DC-0', or 'DC-1'.")
+    
+    #Define default filter types
+    if type(Wn) == float and ftype == 'default':
+        #If the length of Wn equals to 1, the default filter type is low-pass
+        ftype = 'low'
+    
+    if type(Wn) == list and len(Wn) == 2 and ftype == 'default':
+        #If the length of Wn equals to 2, the default filter type is bandpass
+        ftype == 'bandpass'
+        pass_zero = False
+    
+    if type(Wn) == list and len(Wn) >= 3 and ftype == 'default':
+        #If the length of Wn is greater than 2, the default filter type is DC-0
+        ftype == 'DC-0'
+        pass_zero = False
         
-    Returns
-    -------
-        w : ndarray
-            The frequencies at which h was computed, in the same units as fs.
-            By default, w is normalized to the range [0, pi) (radians/sample).
-                
-        h : ndarray
-            The frequency response, as complex numbers.
-    """
+    num = signal.firwin(n, Wn, window=window, pass_zero=pass_zero, 
+                        scale=scaleopt) # Numerator
+    den = 1 # Denominator
     
-    #周波数特性を計算
-    w, h = signal.freqz(system[0], system[1], worN=worN, fs=fs)
-    
-    if outform == 'complex':
-        #complexの場合，周波数特性を複素数で返す
-        return w, h
-    
-    elif outform == 'dB':
-        #dBの場合，周波数特性をdBの数値（20*np.log10(np.abs(h))）を返す
-        h = 20 * np.log10(np.abs(h))
-        return w, h
-    
-    elif outform == 'abs':
-        #absの場合，周波数特性を複素数の絶対値（np.abs(h)）で返す
-        h = np.abs(h)
-        return w, h
-    
-    else:
-        #それ以外では例外をスローする
-        raise ValueError("Parameter outform is must be 'complex', 'dB', or"
-                         +"'abs'.")
+    return num, den
 
-def grpdelay(system, worN=512, fs=2*np.pi):
+
+def fir2(n : int, f, m, npt : int =512, window=None) -> Tuple[float, float]:
     """
-    Group delay of a digital filter.
-    
+    FIR filter design using the window method.
+
+    From the given frequencies `f` and corresponding gains `m`,
+    this function constructs an FIR filter with linear phase and
+    (approximately) the given frequency response.
+
     Parameters
     ----------
-        system : a tuple of array_like describing the system.
-            The following gives the number of elements in the tuple and
-            the interpretation:
-            
-                * (num, den)
-                
-        worN : {None, int, array_like}, optional
-            If a single integer, then compute at that many frequencies 
-            (default is N=512). This is a convenient alternative to:
+    n : int
+        The number of taps in the FIR filter.  `n` must be less than
+        `npt`.
+        
+    f : array_like, 1D
+        The frequency sampling points. Typically 0.0 to 1.0 with 1.0 being
+        Nyquist.
+        The values in `f` must be nondecreasing.  A value can be repeated
+        once to implement a discontinuity.  The first value in `f` must
+        be 0, and the last value must be 1.
+        
+    m : array_like
+        The filter gains at the frequency sampling points. Certain
+        constraints to gain values, depending on the filter type, are applied,
+        see Notes for details.
+        
+    npt : int, optional
+        The size of the interpolation mesh used to construct the filter.
+        The default is 512.  `npt` must be greater than `n/2`.
+        
+    window : string or (string, float) or float, or None, optional
+        Window function to use. Default is "hamming".  See
+        `scipy.signal.get_window` for the complete list of possible values.
+        If None, no window function is applied.
 
-                np.linspace(0, fs if whole else fs/2, N, endpoint=False)
-            
-            Using a number that is fast for FFT computations can result in 
-            faster computations (see Notes).
-            If an array_like, compute the response at the frequencies given. 
-            These are in the same units as fs.
-            
-        fs : float, optional
-            The sampling frequency of the digital system.
-            Defaults to 2*pi radians/sample (so w is from 0 to pi).
-            
     Returns
     -------
-        w : ndarray
-            The frequencies at which h was computed, in the same units as fs.
-            By default, w is normalized to the range [0, pi) (radians/sample).
-            
-        gd : ndarray
-            The group delay.
-    """
-    
-    #デジタルフィルタの群遅延を計算
-    w, gd = signal.group_delay(system, w = worN, fs = fs)
-    
-    #計算誤差を整数に丸める
-    gd = np.round(gd)
-    
-    #周波数と対応する群遅延を返す
-    return w, gd
-    
-def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
-    """
-    Group delay of a digital filter.
-    
-    Parameters
-    ----------
-        system : a tuple of array_like describing the system.
+    system :a tuple of array_like describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
                 
                 * (num, den)
-                
-        worN : {None, int, array_like}, optional
-            If a single integer, then compute at that many frequencies 
-            (default is N=512). This is a convenient alternative to:
 
-                np.linspace(0, fs if whole else fs/2, N, endpoint=False)
-            
-            Using a number that is fast for FFT computations can result in 
-            faster computations (see Notes).
-            If an array_like, compute the response at the frequencies given. 
-            These are in the same units as fs.
-            
-        fs : float, optional
-            The sampling frequency of the digital system.
-            Defaults to 2*pi radians/sample (so w is from 0 to pi).
-            
-        deg : bool, optional
-            If True, the phase response is returned as degree.
-            Default is False.
-            
-    Returns
-    -------
-        w : ndarray
-            The frequencies at which h was computed, in the same units as fs.
-            By default, w is normalized to the range [0, pi) (radians/sample).
-            
-        phase : ndarray
-            The phase response.
     """
     
-    w, h = freqz(system, worN = worN, fs = fs)
-    phase = sp.unwrap(sp.angle(h))
+    if npt <= n/2:
+        raise ValueError('`npt` must be larger than `n/2`.')
     
-    if deg == True:
-        phase = np.rad2deg(phase)
+    nfreqs = npt * 2
+        
+    num = signal.firwin2(n, f, m, nfreqs=nfreqs, window=window)
+    den = 1
     
-    return w, phase
+    return num, den
 
-def zplane(system, show=True, figsize=(8, 8)):
+
+def firls(n : int, f, a, w=None) -> Tuple[float, float]:
     """
-    Zero-pole plot of a digital filter.
-    
+    FIR filter design using least-squares error minimization.
+
+    Calculate the filter coefficients for the linear-phase finite
+    impulse response (FIR) filter which has the best approximation
+    to the desired frequency response described by `f` and
+    `a` in the least squares sense (i.e., the integral of the
+    weighted mean-squared error within the specified bands is
+    minimized).
+
     Parameters
     ----------
-        system : a tuple of array_like describing the system.
+    n : int
+        The number of taps in the FIR filter.  `n` must be odd.
+        
+    f : array_like
+        A monotonic nondecreasing sequence containing the band edges in
+        Hz. All elements must be non-negative and less than or equal to
+        1.
+        
+    a : array_like
+        A sequence the same size as `f` containing the desired gain
+        at the start and end point of each band.
+        
+    w : array_like, optional
+        A relative weighting to give to each band region when solving
+        the least squares problem. `w` has to be half the size of
+        `f`.
+
+    Returns
+    -------
+    system :a tuple of array_like describing the system.
             The following gives the number of elements in the tuple and
             the interpretation:
                 
                 * (num, den)
-                
-        show : bool, optional
-            If True, a zero-pole plot of the digital filter is shown 
-            by matplorlib.pyplot.
-            Default is True.
-            
-        figsize : tuple, optional
-            If show is True, you can set the figure size of zero-pole plot.
-            Default is (8, 8)
-            
+    """
+
+    if n%2 == 0:
+        n += 1
+        print('Warning: The filter length you inserted is even.')
+        print('         The filter length changed to {}.'.format(n))
+    
+    num = signal.firls(n, f, a, weight=w)
+    den = 1
+    
+    return num, den
+
+
+def firpm(n : int, f, a, w=None, ftype : str ='hilbert', lgrid : int =16) -> Tuple[float, float]:
+    """
+    Parameters
+    ----------
+    n : int
+        The desired filter order. The number of taps is the filter order plus 
+        one.
+        
+    f : array_like
+        A monotonic sequence containing the band edges. All elements must be 
+        non-negative and less than 1. The length of `f` must be even.
+    
+    a : array_like
+        A sequence half the size of bands containing the desired gain in each
+        of the specified bands.
+        
+    w : array_like, optional
+        A relative weighting to give to each band region. The length of weight
+        has to be half the length of bands.
+        
+    ftype :  {‘bandpass’, ‘differentiator’, ‘hilbert’}, optional
+        The type of filter:
+            ‘bandpass’ : flat response in bands. This is the default.
+            ‘differentiator’ : frequency proportional response in bands.
+            ‘hilbert’ : filter with odd symmetry, that is, type III
+                        (for even order) or type IV (for odd order) linear 
+                        phase filters.
+        
+    lgrid : int, optional
+        Grid density. The dense grid used in remez is of size 
+        (numtaps + 1) * grid_density. Default is 16.
+
+    Raises
+    ------
+    ValueError
+        If the length of `f` is odd.
+
     Returns
     -------
-        z : array_like
-            Zeros of a digital filter.
-            
-        p : array_like
-            Poles of a digital filter.
-            
-        k : array_like
-            Gain of a digital filter.
+    system :a tuple of array_like describing the system.
+            The following gives the number of elements in the tuple and
+            the interpretation:
+                
+                * (num, den)
+
     """
-    b = system[0]
-    a = system[1]
+    
+    #Error check
+    if len(f)%2 != 0:
+        raise ValueError('The length of `f` must be even.')
+        
+    num = signal.remez(n+1, f, a, weight=w, type=ftype, grid_density=lgrid, 
+                       fs=2)
+    den = 1
+    
+    return num, den
 
-    #The coefficients are less than 1, normalize the coefficients
-    if np.max(b) > 1:
-        kn = np.max(b)
-        b /= float(kn)
-    else:
-        kn = 1
-    
-    if np.max(a) > 1:
-        kd = np.max(a)
-        a /= float(kd)
-    else:
-        kd = 1
 
-    # Get the poles and gains
-    p = np.roots(a)
-    z = np.roots(b)
-    k = kn / float(kd)
-    
-    if show == True:
-        plt.figure(figsize=figsize)
-        ax = plt.subplot(111)
-        uc = patches.Circle((0, 0), radius=1, fill=False,
-                            color='black', ls='dashed')
-        ax.add_patch(uc)
-        plt.plot(z.real, z.imag, 'go', ms=10)
-        plt.plot(p.real, p.imag, 'rx', ms=10)
-        ax.spines['left'].set_position('center')
-        ax.spines['bottom'].set_position('center')
-        ax.spines['right'].set_visible(False)
-        ax.spines['top'].set_visible(False)
-        r = 1.5
-        plt.axis('scaled')
-        plt.axis([-r, r, -r, r])
-        ticks = [-1, -.5, .5, 1]
-        plt.xticks(ticks)
-        plt.yticks(ticks)
+def sgolay(order : int, flamelen : int) -> Tuple[float, float]:
+    """
+    Parameters
+    ----------
+    order : int
+        The order of the polynomial used to fit the samples. polyorder must be 
+        less than flamelen.
+        
+    flamelen : int
+        The length of the filter window (i.e. the number of coefficients). 
+        framelen must be an odd positive integer.
 
-    return z, p, k
+    Returns
+    -------
+    system :a tuple of array_like describing the system.
+            The following gives the number of elements in the tuple and
+            the interpretation:
+                
+                * (num, den)
 
-if __name__ == '__main__':
+    """
+    num = signal.savgol_coeffs(flamelen, order)
+    den = 1
     
-    import matplotlib.pyplot as plt
-    from matplotlib import patches
-    
-    b, a = signal.iirdesign(0.715, 0.99, 1, 120)
-    #lti = signal.lti(b, a)
-    #b = signal.firwin(257, 21000/22050)
-    #a = 1
-    
-    plt.figure()
-    T, yout = impz((b, a))
-    plt.plot(T, yout)
-    plt.xlabel('Sample')
-    plt.ylabel('Normalized Amplitude')
-    
-    plt.figure()
-    w, h = freqz((b, a), fs = 44100, outform='dB')
-    plt.plot(w, h)
-    plt.xlabel('Frequency [Hz]')
-    plt.ylabel('Magnitude [dB]')
-    
-    plt.figure()
-    w, gd = grpdelay((b, a), fs = 44100)
-    plt.plot(w, gd)
-    plt.xlabel('Frequency [Hz]')
-    plt.ylabel('Group delay [samples]')
-    
-    plt.figure()
-    w, phase = phasez((b, a), fs = 44100)
-    plt.plot(w, phase)
-    plt.xlabel('Frequency [Hz]')
-    plt.ylabel('Phase [rad]')
-    
-    z, p, k = zplane((b, a))
-    plt.title('Lowpass digital filter')
+    return num, den
+
+if __name__ == "__main__":
+    x = fir1(127, [0.5, 0.75, 0.9], ftype='DC-1')
+    y = fir2(127, [0, 0.5, 0.75, 0.9, 1], [1, 1, 1, 1, 0])
+    z = firls(127, [0, 0.5, 0.75, 0.9], [1, 1, 1, 0])
+    a = firpm(127, [0, 0.25, 0.5, 0.75, 0.9, 1.0], [1, 0, 0])
+    b = sgolay(11, 41)
