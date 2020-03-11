@@ -8,8 +8,9 @@ Created on Mon Oct 14 13:05:23 2019
 import scipy.signal as signal
 import scipy as sp
 import numpy as np
+from typing import List, Tuple
 
-def impz(system:tuple, n:int=None, fs:int=1):
+def impz(system:tuple, n:int=None, fs:int=1)->Tuple:
     """
     Impulse response of a digital filter.
     
@@ -79,7 +80,7 @@ def impz(system:tuple, n:int=None, fs:int=1):
     
     
         
-def freqz(system, worN=512, fs=2*np.pi, outform = 'complex'):
+def freqz(system, worN:int=512, fs=2*np.pi, outform:str='complex')->Tuple:
     """
     Frequency response of a digital filter.
     
@@ -139,7 +140,7 @@ def freqz(system, worN=512, fs=2*np.pi, outform = 'complex'):
         raise ValueError("Parameter outform is must be 'complex', 'dB', or"
                          +"'abs'.")
 
-def grpdelay(system, worN=512, fs=2*np.pi):
+def grpdelay(system, worN:int=512, fs=2*np.pi)->Tuple:
     """
     Group delay of a digital filter.
     
@@ -185,7 +186,7 @@ def grpdelay(system, worN=512, fs=2*np.pi):
     #周波数と対応する群遅延を返す
     return w, gd
     
-def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
+def phasez(system, worN:int=512, fs=2*np.pi, deg:bool=False)->Tuple:
     """
     Group delay of a digital filter.
     
@@ -234,7 +235,7 @@ def phasez(system, worN = 512, fs = 2*np.pi, deg=False):
     
     return w, phase
 
-def zplane(system, show=True, figsize=(8, 8)):
+def zplane(system, show:bool=True, figsize:Tuple[int, int]=(8, 8)):
     """
     Zero-pole plot of a digital filter.
     
