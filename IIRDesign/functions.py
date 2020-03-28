@@ -247,39 +247,39 @@ def cheby1(n:int, Rp:float, Wp, ftype:str='default', zs:str='z')->Tuple:
         
     #If digital filter.    
     if zs == 'z':
-        if type(Wn) in [list, np.ndarray]:
-            if np.max(Wn) >= 1.0 or np.min(Wn) < 0.0:
-                raise ValueError("When `zs` is 'z', value of `Wn` must be from"
+        if type(Wp) in [list, np.ndarray]:
+            if np.max(Wp) >= 1.0 or np.min(Wp) < 0.0:
+                raise ValueError("When `zs` is 'z', value of `Wp` must be from"
                                  + "0 to 1.")
         else:
-            if Wn >= 1.0 or Wn < 0.0:
-                raise ValueError("When `zs` is 'z', value of `Wn` must be from"
+            if Wp >= 1.0 or Wp < 0.0:
+                raise ValueError("When `zs` is 'z', value of `Wp` must be from"
                                  + "0 to 1.")
                 
     # Filter types
     if ftype == 'default':
-        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wp) in [float, np.float, np.float16, np.float32, np.float64]:
             ftype = 'lowpass'
         else:
             ftype = 'bandpass'
     elif ftype == 'low':
-        if type(Wn) in [list, np.ndarray]:
+        if type(Wp) in [list, np.ndarray]:
             raise ValueError("`Wn` must be float when `ftype` is 'low'.")
         else:
             ftype = 'lowpass'
     elif ftype == 'high':
-        if type(Wn) in [list, np.ndarray]:
+        if type(Wp) in [list, np.ndarray]:
             raise ValueError("`Wn` must be float when `ftype` is 'high'.")
         else:
             ftype = 'highpass'
     elif ftype == 'stop':
-        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wp) in [float, np.float, np.float16, np.float32, np.float64]:
             raise ValueError("`Wn` must be sequence when `ftype` is 'stop'.")
         else:
             ftype = 'bandstop'
     else:
         #bandpass filter
-        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wp) in [float, np.float, np.float16, np.float32, np.float64]:
             raise ValueError("`Wn` must be sequence when `ftype` is 'band'.")
         else:
             ftype = 'bandpass'
@@ -297,6 +297,80 @@ def cheby1(n:int, Rp:float, Wp, ftype:str='default', zs:str='z')->Tuple:
     return num, den
 
 
+def cheb1ord(Wp, Ws, Rp, Rs, zs:str='z')->Tuple[int, float]:
+    """
+    Chebyshev type I filter order selection.
+    
+    Return the order of the lowest order digital or analog Chebyshev Type I 
+    filter that loses no more than gpass dB in the passband and has at least 
+    gstop dB attenuation in the stopband.
+    
+    Parameters
+    ----------
+    Wp, Ws : float
+        Passband and stopband edge frequencies, specified as a scalar or 
+        a two-element vector with values between 0 and 1 inclusive, with 
+        1 corresponding to the normalized Nyquist frequency, π rad/sample. 
+        
+        For digital filters, the unit of passband corner frequency is in 
+        radians per sample. 
+        For example,
+        ・Lowpass: wp = 0.2, ws = 0.3
+        ・Highpass: wp = 0.3, ws = 0.2
+        ・Bandpass: wp = [0.2, 0.5], ws = [0.1, 0.6]
+        ・Bandstop: wp = [0.1, 0.6], ws = [0.2, 0.5]
+        
+        For analog filters, passband corner frequency is in radians per second,
+        and the passband can be infinite.
+        
+    Rp : float
+        The maximum loss in the passband (dB).
+        
+    Rs : float
+        The minimum attenuation in the stopband (dB).
+        
+    zs : {'z', 's'}, optional
+        When 's', return an analog filter, otherwise a digital filter is 
+        returned.
+    """
+    
+    #Default parameters
+    analog = False
+    fs = None
+    
+    #Check the consistency of `Wp` and `Ws`
+    if type(Wp) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wp) != type(Ws):
+            raise ValueError("`Wp` and `Ws` must be the same type.")
+    elif type(Wp) == list or tuple or np.array:
+        if type(Wp) != type(Ws):
+            raise ValueError("`Wp` and `Ws` must be the same type.")
+        elif len(Wp) != len(Ws):
+            raise ValueError("`Wp` and `Ws` must have the same length.")
+    else:
+        raise("`Wp` and `Ws` must be float , list or tuple.")
+        
+    # Check the type of Rp
+    if (type(Rp) in [int, np.int, np.int0, np.int16, np.int32, np.int64\
+        , np.int8, float, np.float, np.float16, np.float32, np.float64]) == False:
+        raise ValueError("`Rp` must be the number.")
+    
+    # Check the type of Rs
+    if (type(Rs) in [int, np.int, np.int0, np.int16, np.int32, np.int64\
+        , np.int8, float, np.float, np.float16, np.float32, np.float64]) == False:
+        raise ValueError("`Rp` must be the number.")
+    
+    # Change the default parameters
+    if zs == 's':
+        analog = True
+    else:
+        fs = 2
+        
+    # calcurate the filter parameters
+    n, Wp = signal.cheb1ord(Wp, Ws, float(Rp), float(Rs), analog=analog, fs=fs)
+    
+    return int(n), Wp
+
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
     import numpy as np
@@ -304,4 +378,11 @@ if __name__ == "__main__":
     n, Wn = buttord(0.6, 0.7, 1, 120)
     num, den = butter(n, Wn)
     x = signal.freqz(num, den, worN = None, fs = 2.0)
+    plt.plot(x[0], np.abs(x[1]))
+    
+    
+    n, Wp = cheb1ord([60/500, 200/500], [50/500, 250/500], 1, 40)
+    num, den = cheby1(n, 1, Wp)
+    x = signal.freqz(num, den, worN = None, fs = 2.0)
+    plt.figure()
     plt.plot(x[0], np.abs(x[1]))
