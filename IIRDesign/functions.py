@@ -879,6 +879,16 @@ def polyscale(a, alpha:float):
     return r * alpha
 
 
+def polystab(a):
+    
+    a = np.array(a)
+    v = np.roots(a)
+    vs = 0.5 * (np.sign(np.abs(v) - 1) + 1)
+    v = (1 - vs) * v + vs / np.conj(v)
+    b = a[0] * np.poly(v)
+    
+    return b
+
 
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
