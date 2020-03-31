@@ -809,10 +809,11 @@ def iirnotch(w0:float, bw:float)->Tuple:
     Returns
     -------
     system :a tuple of array_like describing the system.
-            The following gives the number of elements in the tuple and
-            the interpretation:
+        The following gives the number of elements in the tuple and
+        the interpretation:
                 
                 * (num, den)
+     
     """
     
     if (type(w0) in [float, np.float, np.float16, np.float32, np.float64]) == False:
@@ -827,31 +828,88 @@ def iirnotch(w0:float, bw:float)->Tuple:
     
     return num, den
 
+
+def iirpeak(w0:float, bw:float)->Tuple:
+    """
+    
+
+    Parameters
+    ----------
+    w0 : float
+        Peak frequency, specified as a positive scalar in the range 
+        0.0 < w0 < 1.0, where 1.0 corresponds to π radiance per sample in 
+        the frequency range.
+        
+    bw : float
+        Bandwidth at the –3 dB point, specified as a positive scalar in 
+        the range 0.0 < w0 < 1.0.
+
+    Returns
+    -------
+    system :a tuple of array_like describing the system.
+        The following gives the number of elements in the tuple and
+        the interpretation:
+                
+                * (num, den)
+
+    """
+    
+    if (type(w0) in [float, np.float, np.float16, np.float32, np.float64]) == False:
+        raise ValueError("`w0` must be a float.")
+        
+    if (type(bw) in [float, np.float, np.float16, np.float32, np.float64]) == False:
+        raise ValueError("`bw` must be a float.")
+        
+    # Calcurate quality factor
+    Q = w0/bw
+    num, den = signal.iirpeak(w0, Q, fs = 2.0);
+    
+    return num, den
+
+
+
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
-    import numpy as np
     
+    # Butterworth filter
     n, Wn = buttord([60/500, 200/500], [50/500, 250/500], 1, 40)
     num, den = butter(n, Wn)
     x = signal.freqz(num, den, worN = None, fs = 2.0)
     plt.plot(x[0], np.abs(x[1]))
     
-    
+    # Chebyshev type I filter
     n, Wp = cheb1ord([60/500, 200/500], [50/500, 250/500], 1, 40)
     num, den = cheby1(n, 1, Wp)
     x = signal.freqz(num, den, worN = None, fs = 2.0)
     plt.figure()
     plt.plot(x[0], np.abs(x[1]))
     
-    
+    # Chebyshev type II filter
     n, Ws = cheb2ord([60/500, 200/500], [50/500, 250/500], 1, 40)
     num, den = cheby2(n, 40, Ws)
     x = signal.freqz(num, den, worN = None, fs = 2.0)
     plt.figure()
     plt.plot(x[0], np.abs(x[1]))
     
+    # Elliptic filter
     n, Wp = ellipord([60/500, 200/500], [50/500, 250/500], 1, 40)
     num, den = ellip(n, 1, 40, Wp)
+    x = signal.freqz(num, den, worN = None, fs = 2.0)
+    plt.figure()
+    plt.plot(x[0], np.abs(x[1]))
+    
+    # Second order IIR notch filter
+    w0 = 60/(300/2)
+    bw = w0/35
+    num, den = iirnotch(w0, bw)
+    x = signal.freqz(num, den, worN = None, fs = 2.0)
+    plt.figure()
+    plt.plot(x[0], np.abs(x[1]))
+    
+    # Second order IIR peak filter
+    w0 = 1750/(10000/2)
+    bw = 500/(10000/2)
+    num, den = iirpeak(w0, bw)
     x = signal.freqz(num, den, worN = None, fs = 2.0)
     plt.figure()
     plt.plot(x[0], np.abs(x[1]))
