@@ -831,7 +831,13 @@ def iirnotch(w0:float, bw:float)->Tuple:
 
 def iirpeak(w0:float, bw:float)->Tuple:
     """
+    Design second-order IIR peak (resonant) digital filter.
     
+    A peak filter is a band-pass filter with a narrow bandwidth 
+    (high quality factor). 
+    It rejects components outside a narrow frequency band.
+
+    Caution : This function is not supported variable magnitude response.
 
     Parameters
     ----------
@@ -865,6 +871,12 @@ def iirpeak(w0:float, bw:float)->Tuple:
     num, den = signal.iirpeak(w0, Q, fs = 2.0);
     
     return num, den
+
+def polyscale(a, alpha:float):
+    
+    r = np.roots(a)
+    
+    return r * alpha
 
 
 
@@ -913,3 +925,4 @@ if __name__ == "__main__":
     x = signal.freqz(num, den, worN = None, fs = 2.0)
     plt.figure()
     plt.plot(x[0], np.abs(x[1]))
+    
