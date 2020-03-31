@@ -2,6 +2,13 @@
 A MATLAB-like and simple digital filter design library for python.  
   
 **filterdesigner** can make simple digital filters they have numerator and denominator coefficients and returns these characteristics.
+This library aims to be able to generate FIR/IIR digital filter, prototype analog filters and convolute the digital filters like MATLAB on python.  
+  
+  
+## Module
+### FIRDesign
+### IIRDesign
+### FilterSpec
   
 ## Requirements(tested)
 [Python 3.7.6 or later](https://www.python.org/)  
