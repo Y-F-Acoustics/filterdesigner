@@ -7,8 +7,19 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
   
 ## Module
 ### FIRDesign
+  FIR digital filter design module  
+  
 ### IIRDesign
+  IIR digital and analog filter design module  
+  
 ### FilterSpec
+  Digital filter analysis module  
+  
+### Transform(announced)
+  Transform from numerator and denominator to zelos, poles, gain and abcd coefficients  
+  
+### Export(announced)
+  Export to .npy, .mat, .txt file and so on  
   
 ## Requirements(tested)
 [Python 3.7.6 or later](https://www.python.org/)  
