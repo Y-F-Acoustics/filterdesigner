@@ -6,9 +6,11 @@ Created on Mon Oct 14 13:05:23 2019
 """
 
 import scipy.signal as signal
+import warnings
 import scipy as sp
 import numpy as np
 from typing import List, Tuple
+import sys
 
 def impz(system:tuple, n:int=None, fs:int=1)->Tuple:
     """
@@ -283,9 +285,9 @@ def zplane(system, show:bool=True, figsize:Tuple[int, int]=(8, 8)):
     else:
         kd = 1
 
-    # Get the poles and gains
-    p = np.roots(a)
-    z = np.roots(b)
+    # Get the poles, zeros and gains
+    p = np.round(np.roots(a), decimals=2)
+    z = np.round(np.roots(b), decimals=2)
     k = kn / float(kd)
     
     if show == True:
@@ -309,12 +311,62 @@ def zplane(system, show:bool=True, figsize:Tuple[int, int]=(8, 8)):
 
     return z, p, k
 
+
+def isstable(system)->bool:
+    """
+    Determine whether filter is stable.
+
+    Parameters
+    ----------
+    system : a tuple of array_like describing the system.
+        The following gives the number of elements in the tuple and
+        the interpretation:
+                
+            * (num, den)
+        
+    Returns
+    -------
+    flag : bool
+        If `system` is a stable filter, returns True.
+        
+
+    """
+    _, p, _ = zplane(system, show=False)
+    frag = np.max(np.abs(p)) - 1.0 <= (sys.float_info.epsilon ** (2/3))   
+    
+    return frag
+
+
+def isminphase(system, tol:float=sys.float_info.epsilon**(2/3))->bool:
+    """
+    Determine whether is minimum phase.
+
+    Parameters
+    ----------
+    system : a tuple of array_like describing the system.
+        The following gives the number of elements in the tuple and
+        the interpretation:
+                
+            * (num, den)
+
+    Returns
+    -------
+    flag : bool
+        If `system` is minimum phase, return True.
+
+    """
+    z, p, _ = zplane(system, show=False)
+    frag = np.max(np.abs(z)) - 1.0 <= (sys.float_info.epsilon ** (2/3))
+    
+    return frag
+
+
 if __name__ == '__main__':
     
     import matplotlib.pyplot as plt
     from matplotlib import patches
     
-    b, a = signal.iirdesign(0.715, 0.99, 1, 120)
+    b, a = signal.butter(6, 0.7, btype='high')
     #lti = signal.lti(b, a)
     #b = signal.firwin(257, 21000/22050)
     #a = 1
@@ -345,3 +397,7 @@ if __name__ == '__main__':
     
     z, p, k = zplane((b, a))
     plt.title('Lowpass digital filter')
+    
+    print(isstable((b, a)))
+    
+    print(isminphase((b, a)))
