@@ -873,14 +873,35 @@ def iirpeak(w0:float, bw:float)->Tuple:
     return num, den
 
 def polyscale(a, alpha:float):
-    
+    """
+    Scale roots of polynomial
+
+    b = polyscale(a,alpha) scales the roots of a polynomial in the z-plane, 
+    where a is a vector containing the polynomial coefficients and alpha is 
+    the scaling factor.
+
+    If alpha is a real value in the range [0 1], then the roots of a are 
+    radially scaled toward the origin in the z-plane. Complex values for alpha 
+    allow arbitrary changes to the root locations.
+
+    """
     r = np.roots(a)
     
     return r * alpha
 
 
 def polystab(a):
+    """
+    Stabilize polynomial
     
+    polystab stabilizes a polynomial with respect to the unit circle; it 
+    reflects roots with magnitudes greater than 1 inside the unit circle.
+
+    b = polystab(a) returns a row vector b containing the stabilized polynomial. 
+    a is a vector of polynomial coefficients, normally in the z-domain:
+        
+    A(z) = a(0) + a(1)*z^-1 + ... + a(m)*z^-m
+    """
     a = np.array(a)
     v = np.roots(a)
     vs = 0.5 * (np.sign(np.abs(v) - 1) + 1)
