@@ -7,7 +7,7 @@ Created on Wed Jan 29 16:34:04 2020
 
 import numpy as np
 import scipy.signal as signal
-import scipy as sp
+import scipy.interpolate as ip
 from typing import List, Tuple
 
 def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool =True) -> Tuple:
@@ -290,11 +290,12 @@ def firpm(n : int, f, a, w=None, ftype : str ='hilbert', lgrid : int =16) -> Tup
 
     """
     
-    #Error check
-    if len(f)%2 != 0:
-        raise ValueError('The length of `f` must be even.')
+    #interpolate the frequency band from matlab-like to scipy.
+    x = [i for i in range(len(f))]
+    ipf = ip.interp1d(x, f)
+    f_new = ipf(np.linspace(x[0], x[-1], 2*len(x)))
         
-    num = signal.remez(n+1, f, a, weight=w, type=ftype, grid_density=lgrid, 
+    num = signal.remez(n+1, f_new, a, weight=w, type=ftype, grid_density=lgrid, 
                        fs=2)
     den = 1
     
@@ -331,5 +332,5 @@ if __name__ == "__main__":
     x = fir1(127, [0.5, 0.75, 0.9], ftype='DC-1')
     y = fir2(127, [0, 0.5, 0.75, 0.9, 1], [1, 1, 1, 1, 0])
     z = firls(127, [0, 0.5, 0.75, 0.9], [1, 1, 1, 0])
-    a = firpm(127, [0, 0.25, 0.5, 0.75, 0.9, 1.0], [1, 0, 0])
+    a = firpm(17, [0, 0.3, 0.4, 0.6, 0.7, 1.0], [0, 0, 1, 1, 0, 0])
     b = sgolay(11, 41)
