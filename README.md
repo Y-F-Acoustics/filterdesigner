@@ -26,3 +26,7 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
 [Numpy 1.18.1 or later](https://numpy.org/)  
 [Scipy 1.3.2 or later](https://www.scipy.org/)  
 [Matplotlib 3.1.1 or later](https://matplotlib.org/)  
+  
+## Licensing and copyright notices  
+MATLAB is a registered trademark of The MathWorks, Inc.  
+All original MATLAB code is Copyright (c) 2009, Richard Schreier. See the LICENSE file for the licensing terms.  
