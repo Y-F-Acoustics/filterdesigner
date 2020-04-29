@@ -18,7 +18,7 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
 ### Transform(announced)
   Transform from numerator and denominator to zelos, poles, gain and abcd coefficients  
   
-### io(announced)
+### IO(announced)
   Import and export to .npy, .mat, .txt file and so on  
   
 ## Requirements(tested)
