@@ -32,4 +32,4 @@ It is under construction.
   
 ## Licensing and copyright notices  
 MATLAB is a registered trademark of The MathWorks, Inc.  
-All original MATLAB code is Copyright (c) 2009, Richard Schreier. See the LICENSE file for the licensing terms.  
+
