@@ -183,7 +183,9 @@ def grpdelay(system, worN:int=512, fs=2*np.pi)->Tuple:
     w, gd = signal.group_delay(system, w = worN, fs = fs)
     
     #計算誤差を整数に丸める
-    gd = np.round(gd)
+    if system[1] == 1:
+        # If filter is FIR, round the group_delay
+        gd = np.round(gd)
     
     #周波数と対応する群遅延を返す
     return w, gd
