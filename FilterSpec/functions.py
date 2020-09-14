@@ -190,7 +190,7 @@ def grpdelay(system, worN:int=512, fs=2*np.pi)->Tuple:
     
 def phasez(system, worN:int=512, fs=2*np.pi, deg:bool=False)->Tuple:
     """
-    Group delay of a digital filter.
+     of a digital filter.
     
     Parameters
     ----------
