@@ -15,7 +15,7 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
 ### FilterSpec
   Digital filter analysis module  
   
-### Transform(announced)
+### Transform
   Transform from numerator and denominator to zelos, poles, gain and abcd coefficients  
   
 ### IO
