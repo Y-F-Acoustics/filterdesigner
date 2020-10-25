@@ -17,7 +17,7 @@ def firls(n : int, f, a, w=None) -> Tuple:
     Parameters
     ----------
     n : int
-        The number of taps in the FIR filter.  `n` must be odd.
+        Filter order, specified as a real positive scalar. `n` must be even.
         
     f : array_like
         A monotonic nondecreasing sequence containing the band edges in
@@ -42,11 +42,12 @@ def firls(n : int, f, a, w=None) -> Tuple:
                 * (num, den)
     """
 
-    if n%2 == 0:
+    if n%2 == 1:
         n += 1
-        print('Warning: The filter length you inserted is even.')
-        print('         The filter length changed to {}.'.format(n))
+        #print('Warning: The filter order you inserted is even.')
+        #print('         The filter order changed to {}.'.format(n))
     
+    n += 1
     num = signal.firls(n, f, a, weight=w)
     den = 1
     
