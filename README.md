@@ -5,6 +5,9 @@ A MATLAB-like and simple digital filter design library for python.
 This library aims to be able to generate FIR/IIR digital filter, prototype analog filters and convolute the digital filters like MATLAB on python.  
   
   
+## Status
+It is under construction.
+  
 ## Module
 ### FIRDesign
   FIR digital filter design module  
