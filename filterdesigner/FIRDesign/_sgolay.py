@@ -3,7 +3,7 @@ import scipy.signal as signal
 import scipy.interpolate as ip
 from typing import List, Tuple
 
-def sgolay(order : int, flamelen : int) -> Tuple:
+def sgolay(order : int, framelen : int) -> Tuple:
     """
     Parameters
     ----------
@@ -11,7 +11,7 @@ def sgolay(order : int, flamelen : int) -> Tuple:
         The order of the polynomial used to fit the samples. polyorder must be 
         less than flamelen.
         
-    flamelen : int
+    framelen : int
         The length of the filter window (i.e. the number of coefficients). 
         framelen must be an odd positive integer.
 
@@ -24,7 +24,7 @@ def sgolay(order : int, flamelen : int) -> Tuple:
                 * (num, den)
 
     """
-    num = signal.savgol_coeffs(flamelen, order)
+    num = signal.savgol_coeffs(framelen, order)
     den = 1
     
     return num, den
