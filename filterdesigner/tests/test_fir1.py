@@ -4,7 +4,7 @@ import numpy as np
 
 class TestFIR1(unittest.TestCase):
     def setUp(self):
-        self.n = 3
+        self.n = 2
         self.f1 = 0.1
         self.f2 = 0.2
         self.f3 = 0.3
