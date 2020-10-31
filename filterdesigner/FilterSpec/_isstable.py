@@ -4,6 +4,7 @@ import scipy as sp
 import numpy as np
 from typing import List, Tuple
 import sys
+from ._zplane import zplane
 
 def isstable(system)->bool:
     """

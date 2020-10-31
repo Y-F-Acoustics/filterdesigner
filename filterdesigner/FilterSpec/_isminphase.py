@@ -1,4 +1,5 @@
 import scipy.signal as signal
+from ._zplane import zplane
 import warnings
 import scipy as sp
 import numpy as np
