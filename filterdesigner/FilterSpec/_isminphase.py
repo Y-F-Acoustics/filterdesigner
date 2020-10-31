@@ -24,8 +24,8 @@ def isminphase(system, tol:float=sys.float_info.epsilon**(2/3))->bool:
         If `system` is minimum phase, return True.
 
     """
-    z, p, _ = zplane(system, show=False)
-    frag = np.max(np.abs(z)) - 1.0 <= (sys.float_info.epsilon ** (2/3))
+    z, _, _ = zplane(system, show=False)
+    frag = np.max(np.abs(z)) <= 1.0 - tol
     
     return frag
     

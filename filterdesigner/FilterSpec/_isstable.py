@@ -6,7 +6,7 @@ from typing import List, Tuple
 import sys
 from ._zplane import zplane
 
-def isstable(system)->bool:
+def isstable(system, tol:float=sys.float_info.epsilon ** (2/3))->bool:
     """
     Determine whether filter is stable.
 
@@ -26,7 +26,10 @@ def isstable(system)->bool:
 
     """
     _, p, _ = zplane(system, show=False)
-    frag = np.max(np.abs(p)) - 1.0 <= (sys.float_info.epsilon ** (2/3))   
+    if len(p) == 0:
+        frag = True
+    else:
+        frag = np.max(np.abs(p)) <= 1.0 - tol   
     
     return frag
     

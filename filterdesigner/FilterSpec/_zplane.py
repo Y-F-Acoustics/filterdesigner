@@ -4,6 +4,8 @@ import scipy as sp
 import numpy as np
 from typing import List, Tuple
 import sys
+import matplotlib.pyplot as plt
+from matplotlib import patches
 
 def zplane(system, show:bool=True, figsize:Tuple[int, int]=(8, 8)):
     """
@@ -40,23 +42,28 @@ def zplane(system, show:bool=True, figsize:Tuple[int, int]=(8, 8)):
     b = system[0]
     a = system[1]
 
-    #The coefficients are less than 1, normalize the coefficients
-    if np.max(b) > 1:
-        kn = np.max(b)
-        b /= float(kn)
+    
+    """
+    # The coefficients are less than 1, normalize the coeficients
+    if np.max(np.abs(b)) > 1:
+        kn = np.max(np.abs(b))
+        b = np.abs(b)/float(kn)
     else:
         kn = 1
-    
-    if np.max(a) > 1:
-        kd = np.max(a)
-        a /= float(kd)
+
+    if np.max(np.abs(a)) > 1:
+        kd = np.max(np.abs(a))
+        a = np.abs(a)/float(kd)
     else:
         kd = 1
-
-    # Get the poles, zeros and gains
-    p = np.round(np.roots(a), decimals=2)
-    z = np.round(np.roots(b), decimals=2)
-    k = kn / float(kd)
+        
+    # Get the poles and zeros
+    p = np.roots(a)
+    z = np.roots(b)
+    k = kn/float(kd)
+    """
+    # Get the poles, zeros and gain
+    z, p, k = signal.tf2zpk(b, a)
     
     if show == True:
         plt.figure(figsize=figsize)
@@ -70,9 +77,9 @@ def zplane(system, show:bool=True, figsize:Tuple[int, int]=(8, 8)):
         ax.spines['bottom'].set_position('center')
         ax.spines['right'].set_visible(False)
         ax.spines['top'].set_visible(False)
-        r = 1.5
+        #r = 1.5
         plt.axis('scaled')
-        plt.axis([-r, r, -r, r])
+        #plt.axis([-r, r, -r, r])
         ticks = [-1, -.5, .5, 1]
         plt.xticks(ticks)
         plt.yticks(ticks)
