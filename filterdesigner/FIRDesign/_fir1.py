@@ -19,9 +19,8 @@ def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool 
     Parameters
     ----------
         n : int
-            Length of the filter (number of coefficients, i.e. the filter 
-            order + 1). 
-            `n` must be odd if a passband includes the Nyquist frequency.
+            Filter order. 
+            `n` must be even if a passband includes the Nyquist frequency.
             
         Wn : float or 1D array_like
             Cutoff frequency of filter (expressed in the same units as fs) 
@@ -124,7 +123,7 @@ def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool 
     if ftype in ['high', 'bandpass', 'DC-0']:
         pass_zero = False
         
-    num = signal.firwin(n, Wn, window=window, pass_zero=pass_zero, 
+    num = signal.firwin(n+1, Wn, window=window, pass_zero=pass_zero, 
                         scale=scaleopt) # Numerator
     den = 1 # Denominator
     
