@@ -9,4 +9,5 @@ from ._fir1 import fir1
 from ._fir2 import fir2
 from ._firls import firls
 from ._firpm import firpm
+from ._kaiserord import kaiserord
 from ._sgolay import sgolay
