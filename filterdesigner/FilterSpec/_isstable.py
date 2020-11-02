@@ -29,7 +29,7 @@ def isstable(system, tol:float=sys.float_info.epsilon ** (2/3))->bool:
     if len(p) == 0:
         frag = True
     else:
-        frag = np.max(np.abs(p)) <= 1.0 - tol   
+        frag = np.max(np.abs(p)) <= 1.0 + tol   
     
     return frag
     
