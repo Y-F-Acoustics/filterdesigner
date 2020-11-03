@@ -82,7 +82,7 @@ def kaiserord(f:np.ndarray, a:np.ndarray, dev:np.ndarray, fs:float=2)->Tuple:
         if type(dev) == list:
             dev = np.array(dev)
         else:
-            dev = np.ndarray([dev])
+            dev = np.array([dev])
 
     # Parameter check
     if len(f) != 2*len(a)-2:
@@ -99,7 +99,8 @@ def kaiserord(f:np.ndarray, a:np.ndarray, dev:np.ndarray, fs:float=2)->Tuple:
         raise ValueError("'dev' must be larger than 0.")
 
     # Calcurate normalized frequency band edges.
-    Wn = (f[0:length(f):2]+f[1:length(f):2])/fs
+    Wn = (f[0:len(f):2]+f[1:len(f):2])/fs
+
 
     # Determine ftype
     if len(Wn) == 1:
@@ -124,10 +125,13 @@ def kaiserord(f:np.ndarray, a:np.ndarray, dev:np.ndarray, fs:float=2)->Tuple:
 
     # Calcurate n from beta and dev
     width = 2*np.pi*np.min(f[1:len(f):2]-f[0:len(f):2])/fs
-    n = np.max(1, np.ceil((A-8)/(2.285*width)))
+    n = np.max((1, int(np.ceil((A-8)/(2.285*width)))))
 
     # If last band is high, make sure the order of the filter is even
     if ((a[0] > a[1]) == (len(Wn) % 2 == 0)) and (n % 2 == 1):
         n += 1
+        
+    if len(Wn) == 1:
+        Wn = Wn[0]
 
     return int(n), Wn, beta, ftype
