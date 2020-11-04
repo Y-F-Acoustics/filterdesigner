@@ -6,7 +6,8 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
   
   
 ## Status
-It is under construction.
+It is under construction.  
+[![Build Status](https://travis-ci.org/Y-F-Acoustics/filterdesigner.svg?branch=master)](https://travis-ci.org/Y-F-Acoustics/filterdesigner)
   
 ## Module
 ### FIRDesign
