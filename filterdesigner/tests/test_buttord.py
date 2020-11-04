@@ -22,11 +22,11 @@ class TestButtord(unittest.TestCase):
 
     def test_buttord_3(self):
         # Test case for bandpass filter
-        self.assertTrue(IIRDesign.buttord(self.f2, self.f3, self.Rp, self.Rs) == signal.buttord(self.f2, self.f3, self.Rp, self.Rs, analog=False, fs=2))
+        self.assertTrue(IIRDesign.buttord(self.f3, self.f4, self.Rp, self.Rs) == signal.buttord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2))
 
     def test_buttord_4(self):
         # Test case for bandstop filter
-        self.assertTrue(IIRDesign.buttord(self.f3, self.f2, self.Rp, self.Rs) == signal.buttord(self.f3, self.f2, self.Rp, self.Rs, analog=False, fs=2))
+        self.assertTrue(IIRDesign.buttord(self.f4, self.f3, self.Rp, self.Rs) == signal.buttord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2))
 
     def test_buttord_5(self):
         # Test case for analog filter
