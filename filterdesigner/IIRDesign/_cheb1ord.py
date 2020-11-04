@@ -2,7 +2,7 @@ import scipy.signal as signal
 from typing import List, Tuple
 import numpy as np
 
-def cheb1ord(Wp, Ws, Rp, Rs, zs:str='z')->Tuple[int, float]:
+def cheb1ord(Wp, Ws, Rp:float, Rs:float, zs:str='z')->Tuple:
     """
     Chebyshev type I filter order selection.
     
