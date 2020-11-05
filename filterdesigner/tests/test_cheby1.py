@@ -1,6 +1,7 @@
 import unittest
 import filterdesigner.IIRDesign as IIRDesign
 import scipy.signal as signal
+import numpy as np
 
 class TestCheby1(unittest.TestCase):
 
