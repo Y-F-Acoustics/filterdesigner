@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 import scipy.signal as signal
-import filterDesigner.FIRDesign as FIRDesign
+import filterdesigner.FIRDesign as FIRDesign
 
 class TestSgolay(unittest.TestCase):
     def setUp(self):
