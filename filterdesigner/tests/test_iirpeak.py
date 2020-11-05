@@ -10,4 +10,4 @@ class TestIirpeak(unittest.TestCase):
 
     def test_iirpeak(self):
         # Test case
-        self.assertTrue(IIRDesign.iirpeak(self.w0, self.bw) = signal.iirpeak(self.w0, self.w0/self.bw, fs=2))
+        self.assertTrue(IIRDesign.iirpeak(self.w0, self.bw) == signal.iirpeak(self.w0, self.w0/self.bw, fs=2))
