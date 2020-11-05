@@ -15,21 +15,17 @@ setup(
     name='filterdesigner',
     version=__version__,
     packages=find_packages(),
-    """
-    package_data={
-      'filterdesigner': []
-    },
-    """
+    #package_data={
+    #  'filterdesigner': []
+    #},
     install_requires=['numpy', 'scipy', 'matplotlib'],
     zip_safe=False,
     include_package_data=True,
     author="Yuki Fukuda",
     #author_email="giuseppe.g.venturini@ieee.org",
     description="A MATLAB-like and simple digital filter design library for python.",
-    """
-    long_description=''.join([read('pypi_description.rst'), '\n\n',
-                              read('CHANGES.rst')]),
-    """
+    #long_description=''.join([read('pypi_description.rst'), '\n\n',
+    #                          read('CHANGES.rst')]),
     license="BSD",
     keywords="digital filter",
     url="https://github.com/Y-F-Acoustics/filterdesigner",
