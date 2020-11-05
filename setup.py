@@ -2,7 +2,7 @@
 
 import os
 from setuptools import setup, find_packages
-__version__ = "0.2.3"
+__version__ = "0.0.1"
 
 def read(fname):
     try:
@@ -12,27 +12,30 @@ def read(fname):
         return ""
 
 setup(
-    name='deltasigma',
+    name='filterdesigner',
     version=__version__,
-    packages=find_packages(exclude=['beta']),
+    packages=find_packages(),
+    """
     package_data={
-      'deltasigma': ['tests/test_data/*.mat', 'tests/test_data/*.txt']
+      'filterdesigner': []
     },
-    install_requires=['numpy', 'scipy', 'matplotlib>=3.0.0'],
+    """
+    install_requires=['numpy', 'scipy', 'matplotlib'],
     zip_safe=False,
     include_package_data=True,
-    author="Giuseppe Venturini and others",
-    author_email="giuseppe.g.venturini@ieee.org",
-    description="a Python package to synthesize, simulate, scale and map " + \
-                "to implementable topologies delta sigma modulators.",
+    author="Yuki Fukuda",
+    #author_email="giuseppe.g.venturini@ieee.org",
+    description="A MATLAB-like and simple digital filter design library for python.",
+    """
     long_description=''.join([read('pypi_description.rst'), '\n\n',
                               read('CHANGES.rst')]),
+    """
     license="BSD",
-    keywords="delta sigma modulator simulator",
-    url="http://github.com/ggventurini/python-deltasigma",
-    test_suite = "deltasigma.tests",
+    keywords="digital filter",
+    url="https://github.com/Y-F-Acoustics/filterdesigner",
+    test_suite = "filterdesigner.tests",
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
+        "Development Status :: 2 - Pre-Alpha",
         "Intended Audience :: Education",
         "Intended Audience :: Science/Research",
         "License :: OSI Approved :: BSD License",
