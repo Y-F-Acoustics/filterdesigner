@@ -24,7 +24,7 @@ class TestImpz(unittest.TestCase):
     def test_impz_2(self):
         # Test case for FIR filter with n
         fil = FIRDesign.fir1(self.order, self.cut)
-        T = np.arange(0. self.n, 1)
+        T = np.arange(0, self.n, 1)
         x = np.zeros(len(T))
         x[0] = 1
         yout = signal.lfilter(fil[0], fil[1], x)
