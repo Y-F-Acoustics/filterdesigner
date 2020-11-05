@@ -1,6 +1,7 @@
 import unittest
 import filterdesigner.FIRDesign as FIRDesign
 import filterdesigner.FilterSpec as FilterSpec
+import scipy.signal as signal
 
 class TestZplane(unittest.TestCase):
     def setUp(self):
