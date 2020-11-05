@@ -4,6 +4,7 @@ import scipy as sp
 import numpy as np
 from typing import List, Tuple
 import sys
+from ._freqz import freqz
     
 def phasez(system, worN:int=512, fs=2*np.pi, deg:bool=False)->Tuple:
     """
