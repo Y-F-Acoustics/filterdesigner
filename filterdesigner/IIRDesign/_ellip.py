@@ -29,8 +29,8 @@ def ellip(n:int, Rp:float, Rs:float, Wp, ftype:str='default', zs:str='z')->Tuple
         Smaller values of passband ripple, Rp, and larger values of stopband 
         attenuation, Rs, both result in wider transition bands.
         
-    ftype : {'default', 'law', 'high', 'bandpass', 'stop'}, optional
-        The type of filter. Default is ‘lowpass’.
+    ftype : {'default', 'low', 'high', 'bandpass', 'stop'}, optional
+        The type of filter. Default is ‘default’.
         
     zs : {'z', 's'}, optional
         When 's', return an analog filter, otherwise a digital filter is
