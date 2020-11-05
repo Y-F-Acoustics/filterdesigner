@@ -10,6 +10,6 @@ class TestSgolay(unittest.TestCase):
 
     def test_sgolay(self):
         # Test case for sgolay
-        self.assertTrue(FIRDesign.sgolay(order, framelen) == (signal.savgol_coeffs(framelen, order), 1))
+        self.assertTrue(FIRDesign.sgolay(self.order, self.framelen) == (signal.savgol_coeffs(self.framelen, self.order), 1))
 
     
