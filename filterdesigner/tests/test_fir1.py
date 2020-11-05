@@ -28,8 +28,8 @@ class TestFIR1(unittest.TestCase):
 
     def test_fir1_5(self):
         # Test for DC-0 filter with hamming window.
-        self.assertTrue(FIRDesign.fir1(self.n, [self.f1, self.f2 self.f3, self.f4]) == (np.array([ 0.04890915,  0.91284326,  0.04890915]), 1))
+        self.assertTrue(FIRDesign.fir1(self.n, [self.f1, self.f2, self.f3, self.f4]) == (np.array([ 0.04890915,  0.91284326,  0.04890915]), 1))
 
     def test_fir1_6(self):
         # Test for DC-1 filter with hamming window.
-        self.assertTrue(FIRDesign.fir1(self.n, [self.f1, self.f2 self.f3, self.f4], ftype='DC-1') == (np.array([-0.01376344,  1.02752689, -0.01376344]), 1))
+        self.assertTrue(FIRDesign.fir1(self.n, [self.f1, self.f2, self.f3, self.f4], ftype='DC-1') == (np.array([-0.01376344,  1.02752689, -0.01376344]), 1))
