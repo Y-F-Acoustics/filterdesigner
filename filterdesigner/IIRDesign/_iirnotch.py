@@ -42,6 +42,6 @@ def iirnotch(w0:float, bw:float)->Tuple:
         
     # Calcurate quality factor
     Q = w0/bw
-    num, den = signal.iirnotch(w0, Q, fs = 2.0);
+    num, den = signal.iirnotch(w0, Q, fs = 2.0)
     
     return num, den
