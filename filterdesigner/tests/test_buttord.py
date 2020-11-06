@@ -1,6 +1,7 @@
 import unittest
 import filterdesigner.IIRDesign as IIRDesign
 import scipy.signal as signal
+import numpy as np
 
 class TestButtord(unittest.TestCase):
 
@@ -14,20 +15,20 @@ class TestButtord(unittest.TestCase):
 
     def test_buttord_1(self):
         # Test case for lowpass filter
-        self.assertTrue(IIRDesign.buttord(self.f1, self.f2, self.Rp, self.Rs) == signal.buttord(self.f1, self.f2, self.Rp, self.Rs, analog=False, fs=2))
+        self.assertTrue(np.all(IIRDesign.buttord(self.f1, self.f2, self.Rp, self.Rs) == signal.buttord(self.f1, self.f2, self.Rp, self.Rs, analog=False, fs=2)))
 
     def test_buttord_2(self):
         # Test case for highpass filter
-        self.assertTrue(IIRDesign.buttord(self.f2, self.f1, self.Rp, self.Rs) == signal.buttord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2))
+        self.assertTrue(np.all(IIRDesign.buttord(self.f2, self.f1, self.Rp, self.Rs) == signal.buttord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2)))
 
     def test_buttord_3(self):
         # Test case for bandpass filter
-        self.assertTrue(IIRDesign.buttord(self.f3, self.f4, self.Rp, self.Rs) == signal.buttord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2))
+        self.assertTrue(np.all(IIRDesign.buttord(self.f3, self.f4, self.Rp, self.Rs) == signal.buttord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)))
 
     def test_buttord_4(self):
         # Test case for bandstop filter
-        self.assertTrue(IIRDesign.buttord(self.f4, self.f3, self.Rp, self.Rs) == signal.buttord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2))
+        self.assertTrue(np.all(IIRDesign.buttord(self.f4, self.f3, self.Rp, self.Rs) == signal.buttord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)))
 
     def test_buttord_5(self):
         # Test case for analog filter
-        self.assertTrue(IIRDesign.buttord(60, 75, self.Rp, self.Rs, zs='s') == signal.buttord(60, 75, self.Rp, self.Rs, analog=True, fs=None))
+        self.assertTrue(np.all(IIRDesign.buttord(60, 75, self.Rp, self.Rs, zs='s') == signal.buttord(60, 75, self.Rp, self.Rs, analog=True, fs=None)))
