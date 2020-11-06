@@ -3,7 +3,7 @@ import scipy.signal as signal
 import scipy.interpolate as ip
 from typing import List, Tuple
 
-def fir2(n : int, f, m, npt : int =512, window=None) -> Tuple:
+def fir2(n : int, f, m, npt : int =512, window='hamming') -> Tuple:
     """
     FIR filter design using the window method.
 
