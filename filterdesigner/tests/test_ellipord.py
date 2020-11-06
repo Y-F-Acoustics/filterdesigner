@@ -15,20 +15,31 @@ class TestEllipord(unittest.TestCase):
 
     def test_ellipord_1(self):
         # Test case for lowpass filter
-        self.assertTrue(IIRDesign.ellipord(self.f1, self.f2, self.Rp, self.Rs) == signal.ellipord(self.f1, self.f2, self.Rp, self.Rs, analog=False, fs=2))
+        ORD = IIRDesign.ellipord(self.f1, self.f2, self.Rp, self.Rs)
+        ord = signal.ellipord(self.f1, self.f2, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and np.all(ORD[1] == ord[1]))
 
     def test_ellipord_2(self):
         # Test case for highpass filter
-        self.assertTrue(IIRDesign.ellipord(self.f2, self.f1, self.Rp, self.Rs) == signal.ellipord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2))
-
+        ORD = IIRDesign.ellipord(self.f2, self.f1, self.Rp, self.Rs)
+        ord = signal.ellipord(self.f2, self.f1, self.Rp, self.Rs, analog=False,fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and np.all(ORD[1] == ord[1]))
+        
     def test_ellipord_3(self):
         # Test case for bandpass filter
-        self.assertTrue(IIRDesign.ellipord(self.f3, self.f4, self.Rp, self.Rs) == signal.ellipord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2))
-
+        ORD = IIRDesign.ellipord(self.f3, self.f4, self.Rp, self.Rs)
+        ord = signal.ellipord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and np.all(ORD[1] == ord[1]))
+        
     def test_ellipord_4(self):
         # Test case for bandstop filter
-        self.assertTrue(IIRDesign.ellipord(self.f4, self.f3, self.Rp, self.Rs) == signal.ellipord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2))
-
+        ORD = IIRDesign.ellipord(self.f4, self.f3, self.Rp, self.Rs)
+        ord = signal.ellipord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and np.all(ORD[1] == ord[1]))
+        
     def test_ellipord_5(self):
         # Test case for analog filter
-        self.assertTrue(IIRDesign.ellipord(60, 75, self.Rp, self.Rs, zs='s') == signal.ellipord(60, 75, self.Rp, self.Rs, analog=True, fs=None))
+        ORD = IIRDesign.ellipord(60, 75, self.Rp, self.Rs, zs='s')
+        ord = signal.ellipord(60, 75, self.Rp, self.Rs, analog=True, fs=None)
+        self.assertTrue((ORD[0] == ord[0]) and np.all(ORD[1] == ord[1]))
+        
