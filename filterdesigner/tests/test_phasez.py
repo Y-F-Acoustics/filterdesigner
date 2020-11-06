@@ -16,7 +16,8 @@ class TestPhasez(unittest.TestCase):
         fil = FIRDesign.fir1(self.order, self.cut)
         w, h = signal.freqz(fil[0], fil[1], worN=512, fs=2*np.pi)
         phase = sp.unwrap(sp.angle(h))
-        self.assertTrue(FilterSpec.phasez(fil) == (w, phase))
+        ww, pp = FilterSpec.phasez(fil)
+        self.assertTrue(np.all(w == ww) and np.all(pp == phase))
 
     def test_phasez_2(self):
         # Testcase for return degree form
@@ -24,4 +25,6 @@ class TestPhasez(unittest.TestCase):
         w, h = signal.freqz(fil[0], fil[1], worN=512, fs=2*np.pi)
         phase = sp.unwrap(sp.angle(h))
         phase=np.rad2deg(phase)
-        self.assertTrue(FilterSpec.phasez(fil, deg=True) == (w, phase))
+        ww, pp = FilterSpec.phasez(fil, deg=True)
+        self.assertTrue(np.all(w == ww) and np.all(pp == phase))
+        
