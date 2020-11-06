@@ -10,8 +10,12 @@ class TestTf2zpk(unittest.TestCase):
 
     def test_tf2zpk_1(self):
         # Test case for FIR
-        self.assertTrue(Transform.tf2zpk(self.firfil) == signal.tf2zpk(self.firfil[0], self.firfil[1]))
+        Z, P, K = Transform.tf2zpk(self.firfil)
+        z, p, k = signal.tf2zpk(self.firfil[0], self.firfil[1])
+        self.assertTrue(np.all(Z == z) and np.all(P == p) and (K == k))
 
     def test_tf2zpk_2(self):
         # Test case for IIR
-        self.assertTrue(Transform.tf2zpk(self.iirfil) == signal.tf2zpk(self.iirfil[0], self.iirfil[1]))
+        Z, P, K = Transform.tf2zpk(self.iirfil)
+        z, p, k = signal.tf2zpk(self.iirfil[0], self.iirfil[1])
+        self.assertTrue(np.all(Z == z) and np.all(P == p) and (K == k))
