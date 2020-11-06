@@ -2,7 +2,6 @@ import scipy.signal as signal
 from typing import List, Tuple
 import numpy as np 
 
-
 def cheby2(n:int, Rs:float, Ws, ftype:str='default', zs:str='z')->Tuple:
     """
     Chebyshev type II digital and analog filter design.
@@ -100,8 +99,5 @@ def cheby2(n:int, Rs:float, Ws, ftype:str='default', zs:str='z')->Tuple:
         fs = 2
         
     # Calcurate the filter coefficients
-    num, den = signal.cheby2(n, Rs, Ws, btype=ftype, analog=analog, output='ba'  
-                             , fs=fs)
-    
+    num, den = signal.cheby2(n, Rs, Ws, btype=ftype, analog=analog, output='ba', fs=fs)
     return num, den
-    
