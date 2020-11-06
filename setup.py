@@ -18,7 +18,7 @@ setup(
     #package_data={
     #  'filterdesigner': []
     #},
-    install_requires=['numpy', 'scipy', 'matplotlib'],
+    install_requires=['numpy', 'scipy>=1.2.0', 'matplotlib'],
     zip_safe=False,
     include_package_data=True,
     author="Yuki Fukuda",
