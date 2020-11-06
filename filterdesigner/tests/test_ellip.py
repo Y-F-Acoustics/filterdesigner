@@ -21,13 +21,13 @@ class TestEllip(unittest.TestCase):
         
     def test_ellip_2(self):
         # Test case for lowpass filter without default
-        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype = 'low')
+        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype='low')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wp1, btype='lowpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
         
     def test_ellip_3(self):
         # Test case for highpass filter
-        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype = 'high')
+        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype='high')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wp1, btype='highpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
        　
@@ -39,13 +39,13 @@ class TestEllip(unittest.TestCase):
         
     def test_ellip_5(self):
         # Test case for bandpass filter without default
-        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2, ftype = 'bandpass')
+        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2, ftype='bandpass')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wp2, btype='bandpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
         
     def test_ellip_6(self):
         # Test case for bandstop filter
-        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2, ftype = 'stop')
+        IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2, ftype='stop')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wp2, btype='bandstop', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
         
@@ -54,4 +54,3 @@ class TestEllip(unittest.TestCase):
         IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wps, zs='s')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wps, btype='lowpass', analog=True)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
-        
