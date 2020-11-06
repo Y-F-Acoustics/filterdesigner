@@ -4,7 +4,6 @@ import scipy.signal as signal
 import numpy as np
 
 class TestEllip(unittest.TestCase):
-
     def setUp(self):
         self.n = 3
         self.Rp = 1
