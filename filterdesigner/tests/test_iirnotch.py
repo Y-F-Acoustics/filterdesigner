@@ -1,6 +1,7 @@
 import unittest
 import filterdesigner.IIRDesign as IIRDesign
 import scipy.signal as signal
+import numpy as np
 
 class TestIirnotch(unittest.TestCase):
 
@@ -10,4 +11,6 @@ class TestIirnotch(unittest.TestCase):
 
     def test_iirnotch(self):
         # Test case
-        self.assertTrue(IIRDesign.iirnotch(self.w0, self.bw) == signal.iirnotch(self.w0, self.w0/self.bw, fs=2))
+        IIR = IIRDesign.iirnotch(self.w0, self.bw)
+        iir = signal.iirnotch(self.w0, self.w0/self.bw, fs=2)
+        self.assertTrue(np.all(IIR[0] == iir[0]) and np.all(IIR[1] == iir[1]))
