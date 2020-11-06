@@ -53,3 +53,4 @@ class TestCheby2(unittest.TestCase):
         IIR = IIRDesign.cheby2(self.n, self.Rs, self.Wss, zs='s')
         iir = signal.cheby2(self.n, self.Rs, self.Wss, analog=True)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all)
+    
