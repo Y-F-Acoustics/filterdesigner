@@ -37,10 +37,10 @@ class TestKaiserord(unittest.TestCase):
     def test_kaiserord_5(self):
         # Test case for 'DC-1' filter
         ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m1, self.m2, self.m1, self.m2], self.dev2)
-        self.assertTrue((ORD[0] == 45) and np.all(ORD[1] == [0.25, 0.45, 0.65]) and (ORD[2] == 3.3953210522614574) and (ORD[3] == 'DC-1'))
+        self.assertTrue((ORD[0] == 45) and np.all(ORD[1] == [0.25, 0.45, 0.6499999999999999]) and (ORD[2] == 3.3953210522614574) and (ORD[3] == 'DC-1'))
         
     def test_kaiserord_6(self):
         # Test case for 'DC-0' filter
         ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m2, self.m1, self.m2, self.m1], self.dev2)
-        self.assertTrue((ORD[0] == 46) and np.all(ORD[1] == [0.25, 0.45, 0.65]) and (ORD[2] == 3.3953210522614574) and (ORD[3] == 'DC-0'))
+        self.assertTrue((ORD[0] == 46) and np.all(ORD[1] == [0.25, 0.45, 0.6499999999999999]) and (ORD[2] == 3.3953210522614574) and (ORD[3] == 'DC-0'))
         
