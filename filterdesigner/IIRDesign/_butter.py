@@ -71,7 +71,8 @@ def butter(n : int, Wn, ftype :str='default', zs :str= 'z') -> Tuple:
             
         
     if ftype == 'default':
-        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64,  
+                       int, np.int, np.int0, np.int16, np.int32, np.int64, np.int8]:
             ftype = 'lowpass'
         else:
             ftype = 'bandpass'
@@ -86,13 +87,15 @@ def butter(n : int, Wn, ftype :str='default', zs :str= 'z') -> Tuple:
         else:
             ftype = 'highpass'
     elif ftype == 'stop':
-        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64,  
+                       int, np.int, np.int0, np.int16, np.int32, np.int64, np.int8]:
             raise ValueError("`Wn` must be sequence when `ftype` is 'stop'.")
         else:
             ftype = 'bandstop'
     else:
         #bandpass filter
-        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64]:
+        if type(Wn) in [float, np.float, np.float16, np.float32, np.float64,  
+                       int, np.int, np.int0, np.int16, np.int32, np.int64, np.int8]:
             raise ValueError("`Wn` must be sequence when `ftype` is 'band'.")
         else:
             ftype = 'bandpass'
