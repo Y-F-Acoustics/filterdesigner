@@ -8,10 +8,8 @@ class TestButter(unittest.TestCase):
     def setUp(self):
         self.n = 3
         self.fc = 0.4
-
         self.n2 = 6
         self.fc2 = [0.25, 0.75]
-
         self.fcs = 75
 
     def test_butter_1(self):
