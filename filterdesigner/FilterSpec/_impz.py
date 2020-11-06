@@ -44,7 +44,7 @@ def impz(system:tuple, n:int=None, fs:int=1)->Tuple:
         # calcurate time points
         if n == None:
             # automatically determine the length of time points
-            T = np.arange(0, (len(system[0])+1)/fs, 1/fs)
+            T = np.arange(0, (len(system[0]))/fs, 1/fs)
         else:
             # determine the time points which length is n
             T = np.arange(0, (n+1)/fs, 1/fs)
