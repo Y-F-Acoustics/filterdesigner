@@ -59,7 +59,8 @@ def cheb1ord(Wp, Ws, Rp:float, Rs:float, zs:str='z')->Tuple:
         raise ValueError("`zs` must be 'z' or 's'.")
     
     #Check the consistency of `Wp` and `Ws`
-    if type(Wp) in [float, np.float, np.float16, np.float32, np.float64]:
+    if type(Wp) in [float, np.float, np.float16, np.float32, np.float64,  
+                   int, np.int, np.int0, np.int16, np.int32, np.int64, np.int8]:
         if type(Wp) != type(Ws):
             raise ValueError("`Wp` and `Ws` must be the same type.")
     elif type(Wp) == list or tuple or np.array:
