@@ -9,7 +9,7 @@ class TestCheb2ord(unittest.TestCase):
         self.f3 = [0.2, 0.5]
         self.f4 = [0.1, 0.6]
         self.Rp = 1
-        self.Rs = 1
+        self.Rs = 100
 
     def test_cheb2ord_1(self):
         # Test case for lowpass filter
