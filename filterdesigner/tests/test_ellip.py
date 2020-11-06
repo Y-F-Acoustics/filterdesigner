@@ -11,7 +11,7 @@ class TestEllip(unittest.TestCase):
         self.Wp1 = 0.5
         self.Wp2 = [0.25, 0.75]
         self.Wps = np.pi/2
-
+        
     def test_ellip_1(self):
         # Test case for lowpass filter with default
         IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1)
