@@ -30,9 +30,10 @@ class TestFIRpm(unittest.TestCase):
         f2_2 = self.f2/(self.fs/2)
         f2_2[0] = 0
         f2_2[-1] = 1
+        f2_new2 = f2_new/(self.fs/2)
         x_w = [i for i in range(len(self.w))]
         ipw = ip.interp1d(x_w, self.w)
         w_new = ipw(np.linspace(x_w[0], x_w[-1], 2*len(x_w)))
         FIR = FIRDesign.firpm(self.n2, f2_2, self.a2, self.w)
-        fir = signal.remez(self.n2+1, f2_2, self.a2, w_new, fs=2)
+        fir = signal.remez(self.n2+1, f2_new2, self.a2, w_new, fs=2)
         self.assertTrue(np.all(FIR[0] == fir))
