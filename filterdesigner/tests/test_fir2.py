@@ -16,12 +16,14 @@ class TestFIR2(unittest.TestCase):
     def test_fir2_1(self):
         # Highpass filter with bad filter order.
         FIR = FIRDesign.fir2(self.nhi, self.fhi, self.mhi)
-        self.asserTrue(np.all(FIR[0] == signal.firwin2(35, self.fhi, self.mhi)))
+        fir = signal.firwin2(35, self.fhi, self.mhi)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir2_2(self):
         # Lowpass filter
         FIR = FIRDesign.fir2(self.nlo, self.flo, self.mlo)
-        self.assertTrue(np.all(FIR[0] == signal.firwin2(31, self.flo, self.mlo)))
+        fir = signal.firwin2(31, self.flo, self.mlo)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir2_3(self):
         # Arbitrary Magnitude filter
@@ -34,5 +36,6 @@ class TestFIR2(unittest.TestCase):
         FA = np.hstack((F1, F2, F3))
         AA = np.hstack((A1, A2, A3))
         FIR = FIRDesign.fir2(self.nA, FA, AA)
-        self.assertTrue(np.all(FIR[0] == signal.firwin2(51, FA, AA)))
+        fir = signal.firwin2(51, FA, AA)
+        self.assertTrue(np.all(FIR[0] == fir))
         
