@@ -30,7 +30,7 @@ class TestEllip(unittest.TestCase):
         IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype='high')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wp1, btype='highpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
-       　
+        
     def test_ellip_4(self):
         # Test case for bandpass filter with default
         IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2)
