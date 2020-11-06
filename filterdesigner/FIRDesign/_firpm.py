@@ -4,7 +4,7 @@ import scipy.interpolate as ip
 from typing import List, Tuple
 
 
-def firpm(n : int, f, a, w=None, ftype : str ='hilbert', lgrid : int =16) -> Tuple:
+def firpm(n : int, f, a, w=None, ftype : str ='bandpass', lgrid : int =16) -> Tuple:
     """
     Parameters
     ----------
