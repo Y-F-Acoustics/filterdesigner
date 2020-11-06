@@ -24,13 +24,13 @@ class TestCheb1ord(unittest.TestCase):
         # Test case for bandpass filter
         ORD = IIRDesign.cheb1ord(self.f3, self.f4, self.Rp, self.Rs)
         ord = signal.cheb1ord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)
-        self.assertTrue((ORD[0] == ord[0]) and (ORD[0] == ord[0]).all())
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[1] == ord[1]).all())
 
     def test_cheb1ord_4(self):
         # Test case for bandstop filter
         ORD = IIRDesign.cheb1ord(self.f4, self.f3, self.Rp, self.Rs)
         ord = signal.cheb1ord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)
-        self.assertTrue((ORD[0] == ord[0]) and (ORD[0] == ord[0]).all())
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[1] == ord[1]).all())
         
     def test_cheb1ord_5(self):
         # Test case for analog filter
