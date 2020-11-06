@@ -8,13 +8,16 @@ class TestFIRls(unittest.TestCase):
         self.n = 100
         self.f = [0, 0.15, 0.85, 1]
         self.a = [1, 1, 0, 0]
-        
         self.n2 = 101
 
     def test_firls_1(self):
         # Test for least square method
-        self.assertTrue(FIRDesign.firls(self.n, self.f, self.a) == (signal.firls(101, self.f, self.a), 1))
+        FIR = FIRDesign.firls(self.n, self.f, self.a)
+        fir = signal.firls(101, self.f, self.a)
+        self.assertTrue(np.all(FIR[0] == fir))
         
     def test_firls_2(self):
         # Test for least square method with odd order
-        self.assertTrue(FIRDesign.firls(self.n2, self.f, self.a) == (signal.firls(103, self.f, self.a), 1))
+        FIR = FIRDesign.firls(self.n2, self.f, self.a)
+        fir = signal.firls(103, self.f, self.a)
+        self.assertTrue(FIR[0] == fir)
