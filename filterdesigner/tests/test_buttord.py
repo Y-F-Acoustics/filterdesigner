@@ -19,16 +19,22 @@ class TestButtord(unittest.TestCase):
 
     def test_buttord_2(self):
         # Test case for highpass filter
-        self.assertTrue(np.all(IIRDesign.buttord(self.f2, self.f1, self.Rp, self.Rs) == signal.buttord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2)))
+        ORD = IIRDesign.buttord(self.f2, self.f1, self.Rp, self.Rs)
+        ord = signal.buttord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[1] == ord[1]).all())
 
     def test_buttord_3(self):
         # Test case for bandpass filter
-        self.assertTrue(np.all(IIRDesign.buttord(self.f3, self.f4, self.Rp, self.Rs) == signal.buttord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)))
-
+        ORD = IIRDesign.buttord(self.f3, self.f4, self.Rp, self.Rs)
+        ord = signal.buttord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[1] == ord[1]).all())
+        
     def test_buttord_4(self):
         # Test case for bandstop filter
-        self.assertTrue(np.all(IIRDesign.buttord(self.f4, self.f3, self.Rp, self.Rs) == signal.buttord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)))
-
+        ORD = IIRDesign.buttord(self.f4, self.f3, self.Rp, self.Rs)
+        ord = signal.buttord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[1] == ord[1]).all())
+        
     def test_buttord_5(self):
         # Test case for analog filter
         self.assertTrue(np.all(IIRDesign.buttord(60, 75, self.Rp, self.Rs, zs='s') == signal.buttord(60, 75, self.Rp, self.Rs, analog=True, fs=None)))
