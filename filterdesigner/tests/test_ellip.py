@@ -1,7 +1,7 @@
-import unittest
 import filterdesigner.IIRDesign as IIRDesign
 import scipy.signal as signal
 import numpy as np
+import unittest
 
 class TestEllip(unittest.TestCase):
     def setUp(self):
