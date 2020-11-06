@@ -1,15 +1,17 @@
 import unittest
 import filterdesigner.IIRDesign as IIRDesign
 import scipy.signal as signal
+import numpy as np
 
-class TestEllipord(unittest.TestCase):
+class TestEllip(unittest.TestCase):
+
     def setUp(self):
-        self.f1 = 0.2
-        self.f2 = 0.3
-        self.f3 = [0.2, 0.5]
-        self.f4 = [0.1, 0.6]
+        self.n = 3
         self.Rp = 1
-        self.Rs = 1
+        self.Rs = 120
+        self.Wp1 = 0.5
+        self.Wp2 = [0.25, 0.75]
+        self.Wps = np.pi/2
 
     def test_ellipord_1(self):
         # Test case for lowpass filter
