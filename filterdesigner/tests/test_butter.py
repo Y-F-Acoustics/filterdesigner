@@ -16,7 +16,7 @@ class TestButter(unittest.TestCase):
 
     def test_butter_1(self):
         # Test case for lowpass filter with default
-        IIR = IIRDesign.butter(self.n, self.fc, fs=2)
+        IIR = IIRDesign.butter(self.n, self.fc)
         iir = signal.butter(self.n, self.fc, fs=2)
         self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
     
@@ -46,8 +46,8 @@ class TestButter(unittest.TestCase):
 
     def test_butter_6(self):
         # Test case for bandstop filter
-        IIR = IIRDesign.butter(self.n2, self.fc2, ftype='bandpass')
-        iir = signal.butter(self.n2, self.fc2, fs=2)
+        IIR = IIRDesign.butter(self.n2, self.fc2, ftype='stop')
+        iir = signal.butter(self.n2, self.fc2, btype='bandstop', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
 
     def test_butter_7(self):
