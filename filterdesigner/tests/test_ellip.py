@@ -4,7 +4,6 @@ import scipy.signal as signal
 import numpy as np
 
 class TestEllip(unittest.TestCase):
-    
     def setUp(self):
         self.n = 3
         self.Rp = 1
@@ -54,3 +53,4 @@ class TestEllip(unittest.TestCase):
         IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wps, zs='s')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wps, btype='lowpass', analog=True)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
+        
