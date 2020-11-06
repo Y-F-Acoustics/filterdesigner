@@ -27,6 +27,9 @@ class TestFIRpm(unittest.TestCase):
         x = [i for i in range(len(self.f2))]
         ipf = ip.interp1d(x, self.f2)
         f2_new = ipf(np.linspace(x[0], x[-1], 2*len(x)))
-        FIR = FIRDesign.firpm(self.n2, self.f2/(self.fs/2), self.a2, self.w)
+        f2_2 = self.f2/(self.fs/2)
+        f2_2[0] = 0
+        f2_2[-1] = 1
+        FIR = FIRDesign.firpm(self.n2, f2_2, self.a2, self.w)
         fir = signal.remez(self.n2+1, f2_new, self.a2, self.w, fs=2)
         self.assertTrue(np.all(FIR[0] == fir))
