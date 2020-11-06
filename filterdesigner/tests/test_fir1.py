@@ -1,5 +1,6 @@
 import unittest
 import filterdesigner.FIRDesign as FIRDesign
+import scipy.signal as signal
 import numpy as np
 
 class TestFIR1(unittest.TestCase):
@@ -13,12 +14,14 @@ class TestFIR1(unittest.TestCase):
     def test_fir1_1(self):
         # Test for lowpass filter with hamming window.
         FIR = FIRDesign.fir1(self.n, self.f1)
-        self.assertTrue(np.all(FIR[0] == np.array([0.06799017, 0.86401967, 0.06799017])))
+        fir = signal.firwin(self.n+1, self.f1, window='hamming', pass_zero=True, scale=True)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_2(self):
         # Test for highpass filter with hamming window.
         FIR = FIRDesign.fir1(self.n, self.f1, ftype='high')
-        self.assertTrue(np.all(FIR[0] == np.array([-0.00859313,  0.98281375, -0.00859313])))
+        fir = signal.firwin(self.n+1, self.f1, window='hamming', pass_zero=False, scale=True)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_3(self):
         # Test for bandpass filter with hamming window.
