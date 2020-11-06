@@ -114,11 +114,11 @@ def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool 
     
     if type(Wn) == list and len(Wn) == 2 and (ftype == 'default' or ftype == 'DC-0'):
         #If the length of Wn equals to 2, the default filter type is bandpass
-        ftype == 'bandpass'
+        ftype = 'bandpass'
     
     if type(Wn) == list and len(Wn) >= 3 and ftype == 'default':
         #If the length of Wn is greater than 2, the default filter type is DC-0
-        ftype == 'DC-0'
+        ftype = 'DC-0'
     
     if ftype in ['high', 'bandpass', 'DC-0']:
         pass_zero = False
@@ -128,3 +128,8 @@ def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool 
     den = 1 # Denominator
     
     return num, den
+
+
+if __name__ == "__main__":
+    FIR = fir1(2, [0.1, 0.2])
+    print(FIR[0])
