@@ -14,6 +14,7 @@ class TestZplane(unittest.TestCase):
         b = fil[0]
         a = fil[1]
         z, p, k = signal.tf2zpk(b, a)
+        Z, P, K = FilterSpec.zplane(fil, show=False)
 
-        self.assertTrue(FilterSpec.zplane(fil, show=False) == (z, p, k))
-
+        self.assertTrue(np.all(Z == z) and np.all(P == p) and (K == k))
+        
