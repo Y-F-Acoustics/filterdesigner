@@ -20,4 +20,4 @@ class TestFIRls(unittest.TestCase):
         # Test for least square method with odd order
         FIR = FIRDesign.firls(self.n2, self.f, self.a)
         fir = signal.firls(103, self.f, self.a)
-        self.assertTrue(FIR[0] == fir)
+        self.assertTrue(np.all(FIR[0] == fir))
