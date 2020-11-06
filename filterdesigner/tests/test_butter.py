@@ -35,13 +35,13 @@ class TestButter(unittest.TestCase):
     def test_butter_4(self):
         # Test case for bandpass filter with default
         IIR = IIRDesign.butter(self.n2, self.fc2)
-        iir = signal.butter(self.n2, self.fc2, fs=2)
+        iir = signal.butter(self.n2, self.fc2, btype='bandpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
         
     def test_butter_5(self):
         # Test case for bandpass filter without default
         IIR = IIRDesign.butter(self.n2, self.fc2, ftype='bandpass')
-        iir = signal.butter(self.n2, self.fc2, fs=2)
+        iir = signal.butter(self.n2, self.fc2, btype='bandpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
 
     def test_butter_6(self):
