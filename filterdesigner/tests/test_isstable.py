@@ -8,7 +8,6 @@ class TestIsstable(unittest.TestCase):
     def setUp(self):
         self.order = 80
         self.cut = 0.5
-
         self.n = 3
         self.fc = 0.4
 
@@ -20,4 +19,4 @@ class TestIsstable(unittest.TestCase):
     def test_isstable_2(self):
         # Test case for IIR filter
         fil = IIRDesign.butter(self.n, self.fc)
-        self.assertTrue(FilterSpec.isstable(fil) == False)
+        self.assertTrue(FilterSpec.isstable(fil) == True)
