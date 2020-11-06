@@ -15,13 +15,13 @@ class TestFIR1(unittest.TestCase):
         # Test for lowpass filter with hamming window.
         FIR = FIRDesign.fir1(self.n, self.f1)
         fir = signal.firwin(self.n+1, self.f1, window='hamming', pass_zero=True, scale=True)
-        self.assertTrue(np.all(FIR[0] == fir[0]))
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_2(self):
         # Test for highpass filter with hamming window.
         FIR = FIRDesign.fir1(self.n, self.f1, ftype='high')
         fir = signal.firwin(self.n+1, self.f1, window='hamming', pass_zero=False, scale=True)
-        self.assertTrue(np.all(FIR[0] == fir[0]))
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_3(self):
         # Test for bandpass filter with hamming window.
