@@ -3,7 +3,7 @@ import filterdesigner.IIRDesign as IIRDesign
 import scipy.signal as signal
 import numpy as np
 
-class TestEllip(unittest.TestCase):
+class TestEllipord(unittest.TestCase):
 
     def setUp(self):
         self.n = 3
