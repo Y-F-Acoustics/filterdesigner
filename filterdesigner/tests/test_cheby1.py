@@ -33,13 +33,13 @@ class TestCheby1(unittest.TestCase):
     def test_cheby1_4(self):
         # Test case for bandpass filter with default
         IIR = IIRDesign.cheby1(self.n, self.Rp, self.Wp2)
-        iir = signal.cheby1(self.n, self.Rp, self.Wp2, fs=2)
+        iir = signal.cheby1(self.n, self.Rp, self.Wp2, btype='bandpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
 
     def test_cheby1_5(self):
         # Test case for bandpass filter without default
         IIR = IIRDesign.cheby1(self.n, self.Rp, self.Wp2, ftype='bandpass')
-        iir = signal.cheby1(self.n, self.Rp, self.Wp2, fs=2)
+        iir = signal.cheby1(self.n, self.Rp, self.Wp2, btype='bandpass', fs=2)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
         
     def test_cheby1_6(self):
