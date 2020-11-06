@@ -9,5 +9,5 @@ class TestPolyscale(unittest.TestCase):
 
     def test_polyscale(self):
         # Test case
-        self.assertTrue(IIRDesign.polyscale(self.a, self.alpha) == (self.alpha * np.roots(self.a)))
+        self.assertTrue(np.all(IIRDesign.polyscale(self.a, self.alpha) == (self.alpha * np.roots(self.a))))
         
