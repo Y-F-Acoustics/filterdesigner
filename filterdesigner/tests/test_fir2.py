@@ -34,6 +34,8 @@ class TestFIR2(unittest.TestCase):
         F3 = np.arange(0.79, 1.01, 0.01)
         A3 = 0.2 + 18 * (1-F3) ** 2
         FA = np.hstack((F1, F2, F3))
+        FA[0] = 0
+        FA[-1] = 1
         AA = np.hstack((A1, A2, A3))
         FIR = FIRDesign.fir2(self.nA, FA, AA)
         fir = signal.firwin2(51, FA, AA, nfreqs=1024, window='hamming')
