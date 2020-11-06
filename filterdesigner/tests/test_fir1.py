@@ -26,19 +26,23 @@ class TestFIR1(unittest.TestCase):
     def test_fir1_3(self):
         # Test for bandpass filter with hamming window.
         FIR = FIRDesign.fir1(self.n, [self.f1, self.f2])
-        self.assertTrue(np.all(FIR[0] == np.array([ 0.06301614,  0.88770441,  0.06301614])))
+        fir = signal.firwin(self.n+1, [self.f1, self.f2], window='hamming', pass_zero=False, scale=True)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_4(self):
         # Test for bandstop filter with hamming window.
         FIR = FIRDesign.fir1(self.n, [self.f1, self.f2], ftype='stop')
-        self.assertTrue(np.all(FIR[0] == np.array([-0.00801395,  1.0160279 , -0.00801395])))
+        fir = signal.firwin(self.n+1, [self.f1, self.f2], window='hamming', pass_zero=True, scale=True)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_5(self):
         # Test for DC-0 filter with hamming window.
         FIR = FIRDesign.fir1(self.n, [self.f1, self.f2, self.f3, self.f4])
-        self.assertTrue(np.all(FIR[0] == np.array([ 0.04890915,  0.91284326,  0.04890915])))
+        fir = signal.firwin(self.n+1, [self.f1, self.f2, self.f3, self.f4], window='hamming', pass_zero=False, scale=True)
+        self.assertTrue(np.all(FIR[0] == fir))
 
     def test_fir1_6(self):
         # Test for DC-1 filter with hamming window.
         FIR = FIRDesign.fir1(self.n, [self.f1, self.f2, self.f3, self.f4], ftype='DC-1')
-        self.assertTrue(np.all(FIR[0] == np.array([-0.01376344,  1.02752689, -0.01376344])))
+        fir = signal.firwin(self.n+1, [self.f1, self.f2, self.f3, self.f4], window='hamming', pass_zero=True, scale=True)
+        self.assertTrue(np.all(FIR[0] == fir))
