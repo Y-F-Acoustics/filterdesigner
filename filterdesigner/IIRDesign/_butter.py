@@ -102,7 +102,9 @@ def butter(n : int, Wn, ftype :str='default', zs :str= 'z') -> Tuple:
             
     if zs == 's':
         analog = True
+        fs = None
     else:
+        analog = False
         fs = 2
         
     num, den = signal.butter(n, Wn, ftype, analog=analog, output='ba', fs=fs)
