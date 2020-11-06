@@ -19,9 +19,7 @@ class TestButtord(unittest.TestCase):
 
     def test_buttord_2(self):
         # Test case for highpass filter
-        ORD = IIRDesign.buttord(self.f2, self.f1, self.Rp, self.Rs)
-        ord = signal.buttord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2)
-        self.assertTrue((ORD[0] == ord[0]) and (ORD[1] == ord[1]).all())
+         self.assertTrue(np.all(IIRDesign.buttord(self.f2, self.f1, self.Rp, self.Rs) == signal.buttord(self.f2, self.f1, self.Rp, self.Rs, analog=False, fs=2)))
 
     def test_buttord_3(self):
         # Test case for bandpass filter
