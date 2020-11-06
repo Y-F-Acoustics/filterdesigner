@@ -47,5 +47,5 @@ class TestImpz(unittest.TestCase):
         i_d = signal.dimpulse(dl, n=self.n)
         T = i_d[0]
         yout = i_d[1][0]
-        tt, y = FilterSpec.impz(fil, fs=self.fs)
+        tt, y = FilterSpec.impz(fil, n=self.n, fs=self.fs)
         self.assertTrue(np.all(tt == T) and np.all(y == yout))
