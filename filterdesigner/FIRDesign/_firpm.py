@@ -59,7 +59,7 @@ def firpm(n : int, f, a, w=None, ftype : str ='bandpass', lgrid : int =16) -> Tu
     if w != None:
         x_w = [i for i in range(len(w))]
         ipw = ip.interp1d(x_w, w)
-        w_new = ipf(np.linspace(x_w[0], x_w[-1], 2*len(x_w)))
+        w_new = ipw(np.linspace(x_w[0], x_w[-1], 2*len(x_w)))
         w = w_new
         
     num = signal.remez(n+1, f_new, a, weight=w, type=ftype, grid_density=lgrid, 
