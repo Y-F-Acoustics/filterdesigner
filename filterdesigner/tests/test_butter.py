@@ -16,28 +16,43 @@ class TestButter(unittest.TestCase):
 
     def test_butter_1(self):
         # Test case for lowpass filter with default
-        self.assertTrue(np.all(IIRDesign.butter(self.n, self.fc) == signal.butter(self.n, self.fc, fs=2)))
+        IIR = IIRDesign.butter(self.n, self.fc, fs=2)
+        iir = signal.butter(self.n, self.fc, fs=2)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
     
     def test_butter_2(self):
         # Test case for lowpass filter without default
-        self.assertTrue(np.all(IIRDesign.butter(self.n, self.fc, ftype='low') == signal.butter(self.n, self.fc, fs=2)))
-
+        IIR = IIRDesign.butter(self.n, self.fc, ftype='low')
+        iir = signal.butter(self.n, self.fc, fs=2)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
+        
     def test_butter_3(self):
         # Test case for highpass filter
-        self.assertTrue(np.all(IIRDesign.butter(self.n, self.fc, ftype='high') == signal.butter(self.n, self.fc, btype='highpass', fs=2)))
-
+        IIR = IIRDesign.butter(self.n, self.fc, ftype='high')
+        iir = signal.butter(self.n, self.fc, btype='highpass', fs=2)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
+       
     def test_butter_4(self):
         # Test case for bandpass filter with default
-        self.assertTrue(np.all(IIRDesign.butter(self.n2, self.fc2) == signal.butter(self.n2, self.fc2, fs=2)))
-
+        IIR = IIRDesign.butter(self.n2, self.fc2)
+        iir = signal.butter(self.n2, self.fc2, fs=2)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
+        
     def test_butter_5(self):
         # Test case for bandpass filter without default
-        self.assertTrue(np.all(IIRDesign.butter(self.n2, self.fc2, ftype='bandpass') == signal.butter(self.n2, self.fc2, fs=2)))
+        IIR = IIRDesign.butter(self.n2, self.fc2, ftype='bandpass')
+        iir = signal.butter(self.n2, self.fc2, fs=2)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
 
     def test_butter_6(self):
         # Test case for bandstop filter
-        self.assertTrue(np.all(IIRDesign.butter(self.n2, self.fc2, ftype='stop') == signal.butter(self.n2, self.fc2, btype='bandstop', fs=2)))
+        IIR = IIRDesign.butter(self.n2, self.fc2, ftype='bandpass')
+        iir = signal.butter(self.n2, self.fc2, fs=2)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
 
     def test_butter_7(self):
         # Test case for analog filter
-        self.assertTrue(np.all(IIRDesign.butter(self.n, self.fcs, zs='s') == signal.butter(self.n, self.fcs, analog=True)))
+        IIR = IIRDesign.butter(self.n, self.fcs, zs='s')
+        iir = signal.butter(self.n, self.fcs, analog=True)
+        self.assertTrue((IIR[0] == iir[0]).all and (IIR[1] == iir[1]).all)
+        
