@@ -45,7 +45,8 @@ def grpdelay(system, worN:int=512, fs=2*np.pi)->Tuple:
     # Calcurate the group delay of the digital filter
     w, gd = signal.group_delay(system, w = worN, fs = fs)
     
-    if system[1] == 1:
+    if type(system[1]) in [float, np.float, np.float16, np.float32, np.float64,  
+                       int, np.int, np.int0, np.int16, np.int32, np.int64, np.int8] and system[1] == 1:
         # If filter is FIR, round the group_delay
         gd = np.round(gd)
     
