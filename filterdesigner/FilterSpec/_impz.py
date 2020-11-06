@@ -47,7 +47,7 @@ def impz(system:tuple, n:int=None, fs:int=1)->Tuple:
             T = np.arange(0, (len(system[0]))/fs, 1/fs)
         else:
             # determine the time points which length is n
-            T = np.arange(0, (n+1)/fs, 1/fs)
+            T = np.arange(0, n/fs, 1/fs)
             
         # make impulse signal
         x = np.zeros(len(T))
