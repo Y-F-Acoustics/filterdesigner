@@ -22,12 +22,16 @@ class TestCheb1ord(unittest.TestCase):
 
     def test_cheb1ord_3(self):
         # Test case for bandpass filter
-        self.assertTrue(np.all(IIRDesign.cheb1ord(self.f3, self.f4, self.Rp, self.Rs) == signal.cheb1ord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)))
+        ORD = IIRDesign.cheb1ord(self.f3, self.f4, self.Rp, self.Rs)
+        ord = signal.cheb1ord(self.f3, self.f4, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[0] == ord[0]).all())
 
     def test_cheb1ord_4(self):
         # Test case for bandstop filter
-        self.assertTrue(np.all(IIRDesign.cheb1ord(self.f4, self.f3, self.Rp, self.Rs) == signal.cheb1ord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)))
-
+        ORD = IIRDesign.cheb1ord(self.f4, self.f3, self.Rp, self.Rs)
+        ord = signal.cheb1ord(self.f4, self.f3, self.Rp, self.Rs, analog=False, fs=2)
+        self.assertTrue((ORD[0] == ord[0]) and (ORD[0] == ord[0]).all())
+        
     def test_cheb1ord_5(self):
         # Test case for analog filter
         self.assertTrue(np.all(IIRDesign.cheb1ord(60, 75, self.Rp, self.Rs, zs='s') == signal.cheb1ord(60, 75, self.Rp, self.Rs, analog=True, fs=None)))
