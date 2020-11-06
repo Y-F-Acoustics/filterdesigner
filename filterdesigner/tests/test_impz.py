@@ -17,7 +17,8 @@ class TestImpz(unittest.TestCase):
     def test_impz_1(self):
         # Test case for FIR filter without n
         fil = FIRDesign.fir1(self.order, self.cut)
-        self.assertTrue(np.all(FilterSpec.impz(fil)[1] == fil[0]))
+        _, yout = FilterSpec.impz(fil)
+        self.assertTrue(np.all(yout == fil[0]))
 
     def test_impz_2(self):
         # Test case for FIR filter with n
