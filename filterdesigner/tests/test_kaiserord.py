@@ -26,16 +26,21 @@ class TestKaiserord(unittest.TestCase):
 
     def test_kaiserord_3(self):
         # Test case for bandpass filter
-        self.assertTrue(np.all(FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4], [self.m2, self.m1, self.m2], self.dev2) == (45, [0.25, 0.45], 3.3953210522614574, 'bandpass')))
-
+        ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4], [self.m2, self.m1, self.m2], self.dev2)
+        self.assertTrue((ORD[0] == 45) and np.all(ORD[1] == [0.25, 0.45]) and (ORD[2] = 3.3953210522614574) and (ORD[3] == 'bandpass'))
+        
     def test_kaiserord_4(self):
         # Test case for bandstop filter
-        self.assertTrue(np.all(FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4], [self.m1, self.m2, self.m1], self.dev2) == (46, [0.25, 0.45], 3.3953210522614574, 'stop')))
-
+        ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4], [self.m1, self.m2, self.m1], self.dev2)
+        self.assertTrue((ORD[0] == 46) and np.all(ORD[1] == [0.25, 0.45]) and (ORD[2] = 3.3953210522614574) and (ORD[3] == 'stop'))
+        
     def test_kaiserord_5(self):
         # Test case for 'DC-1' filter
-        self.assertTrue(np.all(FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m1, self.m2, self.m1, self.m2], self.dev2) == (45, [0.25, 0.45, 0.65], 3.3953210522614574, 'DC-1')))
-
+        ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m1, self.m2, self.m1, self.m2], self.dev2)
+        self.assertTrue((ORD[0] == 45) and np.all(ORD[1] == [0.25, 0.45, 0.65]) and (ORD[2] = 3.3953210522614574) and (ORD[3] == 'DC-1'))
+        
     def test_kaiserord_6(self):
         # Test case for 'DC-0' filter
-        self.assertTrue(np.all(FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m2, self.m1, self.m2, self.m1], self.dev2) == (46, [0.25, 0.45, 0.65], 3.3953210522614574, 'DC-0')))
+        ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m2, self.m1, self.m2, self.m1], self.dev2)
+        self.assertTrue((ORD[0] == 46) and np.all(ORD[1] == [0.25, 0.45, 0.65]) and (ORD[2] = 3.3953210522614574) and (ORD[3] == 'DC-0'))
+        
