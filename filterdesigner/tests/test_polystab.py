@@ -13,4 +13,4 @@ class TestPolystab(unittest.TestCase):
         vs = 0.5 * (np.sign(np.abs(v) - 1) + 1)
         v = (1 - vs) * v + vs / np.conj(v)
         b = x[0] * np.poly(v)
-        self.assertTrue(np.all(IIRDesign.polystab(a) == b))
+        self.assertTrue(np.all(IIRDesign.polystab(self.a) == b))
