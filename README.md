@@ -6,7 +6,6 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
   
   
 ## Status
-It is under construction.  
 [![Build Status](https://travis-ci.org/Y-F-Acoustics/filterdesigner.svg?branch=master)](https://travis-ci.org/Y-F-Acoustics/filterdesigner)
 ![Python package](https://github.com/Y-F-Acoustics/filterdesigner/workflows/Python%20package/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/Y-F-Acoustics/filterdesigner/badge.svg?branch=master)](https://coveralls.io/github/Y-F-Acoustics/filterdesigner?branch=master)
