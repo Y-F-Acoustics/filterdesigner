@@ -13,18 +13,45 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
 ## Module
 ### FIRDesign
   FIR digital filter design module  
+  - fir1  
+  - fir2  
+  - firls  
+  - firpm  
+  - kaiserord  
+  - sgolay  
   
 ### IIRDesign
   IIR digital and analog filter design module  
+  - butter  
+  - buttord  
+  - cheb1ord  
+  - cheb2ord  
+  - cheby1
+  - cheby2
+  - ellip  
+  - ellipord  
+  - iirnotch  
+  - iirpeak  
+  - polyscale  
+  - polystab  
   
 ### FilterSpec
   Digital filter analysis module  
-  
-### Transform
-  Transform from numerator and denominator to zelos, poles, gain and abcd coefficients  
+  - freqz  
+  - grpdelay  
+  - impz  
+  - isminphase  
+  - isstable  
+  - phasez  
+  - zplane
   
 ### IO
   Import and export to .npy, .mat, .txt file and so on  
+  - loadmat  
+  - savemat  
+  - savenpy  
+  - savenpz  
+  - whosmat  
   
 ## Demos  
 It is under construction.
