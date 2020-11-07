@@ -36,3 +36,8 @@ class TestButtord(unittest.TestCase):
     def test_buttord_5(self):
         # Test case for analog filter
         self.assertTrue(np.all(IIRDesign.buttord(60, 75, self.Rp, self.Rs, zs='s') == signal.buttord(60, 75, self.Rp, self.Rs, analog=True, fs=None)))
+
+    def test_buttord_5(self):
+        # Test case for Exception
+        with self.assertRaises(ValueError):
+            IIRDesign.buttord(self.f1, self.f2, self.Rp, self.Rs, zs='x')
