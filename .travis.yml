@@ -23,7 +23,7 @@ install:
   - conda create --quiet --yes -n buildenv python=$TRAVIS_PYTHON_VERSION
   - source activate buildenv
   - conda install --yes numpy scipy matplotlib nose setuptools coverage
-  - pip install python-coveralls
+  - pip install coveralls
   - python setup.py install
 
 # Run the tests
