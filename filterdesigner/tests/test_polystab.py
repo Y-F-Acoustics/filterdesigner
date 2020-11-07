@@ -4,13 +4,13 @@ import numpy as np
 
 class TestPolystab(unittest.TestCase):
     def setUp(self):
-        self.a = 4
+        self.a = [1, -2, -3]
     
     def test_polystab(self):
         # test case
-        x = self.a
+        x = [1, -2, -3]
         v = np.roots(x)
         vs = 0.5 * (np.sign(np.abs(v) - 1) + 1)
         v = (1 - vs) * v + vs / np.conj(v)
         b = a[0] * np.poly(v)
-        self.assertTrue(IIRDesign.polystab(a) == b)
+        self.assertTrue(np.all(IIRDesign.polystab(a) == b))
