@@ -35,3 +35,34 @@ class TestCheb1ord(unittest.TestCase):
     def test_cheb1ord_5(self):
         # Test case for analog filter
         self.assertTrue(np.all(IIRDesign.cheb1ord(60, 75, self.Rp, self.Rs, zs='s') == signal.cheb1ord(60, 75, self.Rp, self.Rs, analog=True, fs=None)))
+
+    def test_cheb1ord_6(self):
+        # Test case for Exception 1
+        with self.assertRaises(ValueError):
+            IIRDesign.cheb1ord(60, 75, self.Rp, self.Rs, zs='x')
+
+    def test_cheb1ord_7(self):
+        # Test case for Exception 2
+        with self.assertRaises(ValueError):
+            IIRDesign.cheb1ord(0.2, 75, self.Rp, self.Rs)
+
+    def test_cheb1ord_8(self):
+        # Test case for Exception 3
+        with self.assertRaises(ValueError):
+            IIRDesign.cheb1ord(self.f3, [1, 6], self.Rp, self.Rs)
+
+    def test_cheb1ord_9(self):
+        # Test case for Exception 4
+        with self.assertRaises(ValueError):
+            IIRDesign.cheb1ord(self.f3, [0.1, 0.6, 0.7], self.Rp, self.Rs)
+    
+    def test_cheb1ord_10(self):
+        # Test case for Exception 5
+        with self.assertRaises(ValueError):
+            IIRDesign.cheb1ord(self.f1, self.f2, 'x', self.Rs)
+
+    def test_cheb1ord_11(self):
+        # Test case for Exception 6
+        with self.assertRaises(ValueError):
+            IIRDesign.cheb1ord(self.f1, self.f2, self.Rp, 'x')
+            
