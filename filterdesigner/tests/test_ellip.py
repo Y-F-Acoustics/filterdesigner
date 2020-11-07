@@ -54,3 +54,48 @@ class TestEllip(unittest.TestCase):
         IIR = IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wps, zs='s')
         iir = signal.ellip(self.n, self.Rp, self.Rs, self.Wps, btype='lowpass', analog=True)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
+
+    def test_ellip_8(self):
+        # test case for Exception 1
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wps, zs='x')
+
+    def test_ellip_9(self):
+        # test case for Exception 2
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(2.5, self.Rp, self.Rs, self.Wp1)
+
+    def test_ellip_10(self):
+        # test case for Exception 3
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype='x')
+
+    def test_ellip_11(self):
+        # test case for Exception 4
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, 1.4, zs='z')
+
+    def test_ellip_12(self):
+        # test case for Exception 5
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, [0.5, 1.5], zs='z')
+
+    def test_ellip_13(self):
+        # test case for Exception 6
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2, ftype='low')
+
+    def test_ellip_14(self):
+        # test case for Exception 7
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp2, ftype='high')
+
+    def test_ellip_15(self):
+        # test case for Exception 8
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype='stop')
+
+    def test_ellip_16(self):
+        # test case for Exception 9
+        with self.assertRaises(ValueError):
+            IIRDesign.ellip(self.n, self.Rp, self.Rs, self.Wp1, ftype='bandpass')
