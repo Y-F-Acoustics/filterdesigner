@@ -30,7 +30,7 @@ This library aims to be able to generate FIR/IIR digital filter, prototype analo
 It is under construction.
 
 ## Requirements(tested)
-[Python 3.7.6 or later](https://www.python.org/)  
+[Python 3.6 or later](https://www.python.org/)  
 [Numpy 1.18.1 or later](https://numpy.org/)  
 [Scipy 1.3.2 or later](https://www.scipy.org/)  
 [Matplotlib 3.1.1 or later](https://matplotlib.org/)  
