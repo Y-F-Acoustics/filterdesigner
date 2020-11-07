@@ -54,3 +54,47 @@ class TestCheby1(unittest.TestCase):
         iir = signal.cheby1(self.n, self.Rp, self.Wps, analog=True)
         self.assertTrue((IIR[0] == iir[0]).all() and (IIR[1] == iir[1]).all())
         
+    def test_cheby1_8(self):
+        # Test case for exception 1
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wp2, ftype='x')
+
+    def test_cheby1_9(self):
+        # Test case for exception 2
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wps, zs='x')
+
+    def test_cheby1_10(self):
+        # Test case for exception 3
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(2.5, self.Rp, self.Wp2, ftype='bandpass')
+
+    def test_cheby1_11(self):
+        # Test case for exception 4
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wps, ftype='low')
+
+    def test_cheby1_12(self):
+        # Test case for exception 5
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, [2, 4], ftype='stop')
+
+    def test_cheby1_13(self):
+        # Test case for exception 6
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wp2, ftype='low')
+
+    def test_cheby1_14(self):
+        # Test case for exception 7
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wp2, ftype='high')
+
+    def test_cheby1_15(self):
+        # Test case for exception 8
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wp1, ftype='stop')
+
+    def test_cheby1_16(self):
+        # Test case for exception 9
+        with self.assertRaises(ValueError):
+            IIRDesign.cheby1(self.n, self.Rp, self.Wp1, ftype='bandpass')
