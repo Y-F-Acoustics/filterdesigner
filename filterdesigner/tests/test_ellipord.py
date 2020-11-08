@@ -43,3 +43,28 @@ class TestEllipord(unittest.TestCase):
         ord = signal.ellipord(60, 75, self.Rp, self.Rs, analog=True, fs=None)
         self.assertTrue((ORD[0] == ord[0]) and np.all(ORD[1] == ord[1]))
         
+    def test_ellipord_6(self):
+        # Test case for exception 1
+        with self.assertRaises(ValueError):
+            IIRDesign.ellipord(60, 75, self.Rp, self.Rs, zs='x')
+
+    def test_ellipord_7(self):
+        # Test case for exception 2
+        with self.assertRaises(ValueError):
+            IIRDesign.ellipord(self.f1, 3, self.Rp, self.Rs)
+
+    def test_ellipord_8(self):
+        # test case for exception 3
+        with self.assertRaises(ValueError):
+            IIRDesign.ellipord([3, 4], self.f4, self.Rp, self.Rs)
+
+    def test_ellipord_9(self):
+        # Test case for exception 4
+        with self.assertRaises(ValueError):
+            IIRDesign.ellipord(self.f1, self.f2, 'x', self.Rs)
+
+    def test_ellipord_10(self):
+        # Test case for exception 5
+        with self.assertRaises(ValueError):
+            IIRDesign.ellipord(self.f1, self.f2, self.Rp, 'x')
+    
