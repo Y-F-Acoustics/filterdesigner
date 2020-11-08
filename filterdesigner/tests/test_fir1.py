@@ -46,3 +46,23 @@ class TestFIR1(unittest.TestCase):
         FIR = FIRDesign.fir1(self.n, [self.f1, self.f2, self.f3, self.f4], ftype='DC-1')
         fir = signal.firwin(self.n+1, [self.f1, self.f2, self.f3, self.f4], window='hamming', pass_zero=True, scale=True)
         self.assertTrue(np.all(FIR[0] == fir))
+
+    def test_fir1_7(self):
+        # Test for Exception 1
+        with self.assertRaises(ValueError):
+            FIRDesign.fir1(self.n, self.f1, ftype='x')
+
+    def test_fir1_8(self):
+        # Test for exception 2
+        with self.assertRaises(ValueError):
+            FIRDesign.fir1(self.n, self.f1, ftype='stop')
+
+    def test_fir1_9(self):
+        # Test for exception 3
+        with self.assertRaises(ValueError):
+            FIRDesign.fir1(self.n, [self.f1, self.f2], ftype='low')
+
+    def test_fir1_10(self):
+        # test for exception 4
+        with self.assertRaises(ValueError):
+            FIRDesign.fir1(self.n, [self.f1, self.f2, self.f3, self.f4], ftype='high')
