@@ -41,4 +41,10 @@ class TestFreqz(unittest.TestCase):
         w1, h1 = FilterSpec.freqz(fil)
         w2, h2 = signal.freqz(fil[0], fil[1], worN=512, fs=2*np.pi)
         self.assertTrue(np.all(w1 == w2) and np.all(h1 == h2))
+
+    def test_freqz_5(self):
+        # Test case for exception
+        with self.assertRaises(ValueError):
+            FilterSpec.freqz(fil, outform='x')
+
         
