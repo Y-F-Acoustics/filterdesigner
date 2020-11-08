@@ -128,8 +128,3 @@ def fir1(n : int, Wn, ftype : str ='default', window='hamming', scaleopt : bool 
     den = 1 # Denominator
     
     return num, den
-
-
-if __name__ == "__main__":
-    FIR = fir1(2, [0.1, 0.2])
-    print(FIR[0])
