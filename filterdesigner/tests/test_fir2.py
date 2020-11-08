@@ -41,3 +41,7 @@ class TestFIR2(unittest.TestCase):
         fir = signal.firwin2(51, FA, AA, nfreqs=1024, window='hamming')
         self.assertTrue(np.all(FIR[0] == fir))
         
+    def test_fir2_4(self):
+        # Test case for exception
+        with self.assertRaises(ValueError):
+            FIRDesign.fir2(self.nhi, self.fhi, self.mhi, npt=self.nhi)
