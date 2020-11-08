@@ -44,4 +44,4 @@ class TestFIR2(unittest.TestCase):
     def test_fir2_4(self):
         # Test case for exception
         with self.assertRaises(ValueError):
-            FIRDesign.fir2(self.nhi, self.fhi, self.mhi, npt=self.nhi)
+            FIRDesign.fir2(self.nhi, self.fhi, self.mhi, npt=self.nhi/4)
