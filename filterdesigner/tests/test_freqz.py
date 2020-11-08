@@ -45,6 +45,7 @@ class TestFreqz(unittest.TestCase):
     def test_freqz_5(self):
         # Test case for exception
         with self.assertRaises(ValueError):
+            fil = FIRDesign.fir1(self.order, self.cut)
             FilterSpec.freqz(fil, outform='x')
 
         
