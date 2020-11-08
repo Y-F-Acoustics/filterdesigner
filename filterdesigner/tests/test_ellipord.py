@@ -68,3 +68,7 @@ class TestEllipord(unittest.TestCase):
         with self.assertRaises(ValueError):
             IIRDesign.ellipord(self.f1, self.f2, self.Rp, 'x')
     
+    def test_ellipord_11(self):
+        # Test case for exception 6
+        with self.assertRaises(ValueError):
+            IIRDesign.ellipord([0.2, 0.5, 0.7], self.f4, self.Rp, self.Rs)
