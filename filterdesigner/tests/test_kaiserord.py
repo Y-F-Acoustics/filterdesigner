@@ -44,3 +44,17 @@ class TestKaiserord(unittest.TestCase):
         ORD = FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4, self.f5, self.f6], [self.m2, self.m1, self.m2, self.m1], self.dev2)
         self.assertTrue((ORD[0] == 46) and np.all(ORD[1] == [0.25, 0.45, 0.6499999999999999]) and (ORD[2] == 3.3953210522614574) and (ORD[3] == 'DC-0'))
         
+    def test_kaiserord_7(self):
+        # Test case for Exception 1
+        with self.assertRaises(ValueError):
+            FIRDesign.kaiserord([self.f1, self.f2], [self.m1, self.m2, self.m1], self.dev2)
+
+    def test_kaiserord_8(self):
+        # Test case for Exception 2
+        with self.assertRaises(ValueError):
+            FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4], [self.m1, self.m2, self.m1], [self.dev1, self.dev2])
+
+    def test_kaiserord_9(self):
+        # Test case for Exception 3
+        with self.assertRaises(ValueError):
+            FIRDesign.kaiserord([self.f1, self.f2, self.f3, self.f4], [self.m1, self.m2, self.m1], [self.dev1, -0.2])
